@@ -1,4 +1,4 @@
-package Charity_Platform_Backend.entity;
+package backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

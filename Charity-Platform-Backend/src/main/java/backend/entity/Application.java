@@ -1,4 +1,4 @@
-package Charity_Platform_Backend.entity;
+package backend.entity;
 
 
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-public class Transaction {
+public class Application {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,11 @@ public class Transaction {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "meeting_id")
-    private Meeting meeting;
+    @JoinColumn(name = "event_id")
+    private Event event;
 
-    private Double amount;
+    private LocalDate registrationDate;
 
-    private LocalDate transactionDate;
+    @Enumerated(EnumType.STRING)
+    private ParticipationStatus status; // Enum: REGISTERED, CONFIRMED, CANCELED
 }
-

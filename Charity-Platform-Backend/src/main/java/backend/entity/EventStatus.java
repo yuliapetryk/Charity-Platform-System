@@ -1,4 +1,4 @@
-package Charity_Platform_Backend.entity;
+package backend.entity;
 
 public enum EventStatus {
     CONFIRMED,
