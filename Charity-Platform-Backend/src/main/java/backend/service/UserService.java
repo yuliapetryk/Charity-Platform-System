@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.entity.Role;
 import backend.entity.User;
 import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,16 @@ public class UserService {
 
             }
         };
+    }
+
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+
+    }
+
+    public Role getRole(String username) {
+        return userRepository.getRole(username);
+
     }
 
     public User save (User newUser){
