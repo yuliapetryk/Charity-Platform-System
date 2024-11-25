@@ -35,8 +35,6 @@ public class User implements UserDetails {
     private UserType type; // Enum: ORGANIZATION, INDIVIDUAL
 
     private LocalDate registrationDate;
-    private String phoneNumber;
-    private String address;
     private String profilePhoto;
 
     @Enumerated(EnumType.STRING)
@@ -45,6 +43,16 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
+    User( String firstName, String lastName, String email, String password, UserType type, Role role){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+        this.role = role;
+        this.profilePhoto = null;
+        this.status = UserStatus.ACTIVE;
+    }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Application> applications; // User's event registrations
@@ -58,4 +66,5 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
+
 }
