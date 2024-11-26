@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +42,9 @@ public class UserService {
             newUser.setRegistrationDate(LocalDate.now());
         }
         return userRepository.save(newUser);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);  // Assuming you have this method in your UserRepository
     }
 }

@@ -53,9 +53,20 @@ public class User implements UserDetails {
         this.profilePhoto = null;
         this.status = UserStatus.ACTIVE;
     }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Application> applications; // User's event registrations
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Application> applications; // User's event registrations
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

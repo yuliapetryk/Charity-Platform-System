@@ -15,20 +15,23 @@ public class Event {
     private Long id;
 
     private String name;
+
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id")
-    private User organizer; // Event organizer
+    private User organizer;
 
-    private String category; // e.g., Health, Education, Environment
-    private String location;
+    private String category;
+
     private LocalDate date;
 
-    @Enumerated(EnumType.STRING)
-    private EventStatus status; // Enum: CONFIRMED, CANCELED, HELD
+    private EventStatus status;
+
+    @Lob
+    private byte[] image;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Application> applications; // Event participants
+    private List<Application> applications;
 }
 
