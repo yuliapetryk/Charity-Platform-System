@@ -16,7 +16,12 @@ public class Event {
 
     private String name;
 
+    @Column(length = 1500)
     private String description;
+
+    @Column(length = 250)
+    private String shortDescription;
+
 
     @ManyToOne
     @JoinColumn(name = "organizer_id")
@@ -26,7 +31,8 @@ public class Event {
 
     private LocalDate date;
 
-    private EventStatus status;
+    @Enumerated(EnumType.STRING)
+    private EventStatus statusEvent;
 
     @Lob
     private byte[] image;

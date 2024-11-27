@@ -51,6 +51,7 @@ public class EventController {
             @RequestHeader("Authorization") String authorizationHeader,  // Get token from headers
             @RequestParam("name") String name,
             @RequestParam("description") String description,
+            @RequestParam("shortDescription") String shortDescription,
             @RequestParam("category") String category,
             @RequestParam("image") MultipartFile image) {
 
@@ -78,10 +79,12 @@ public class EventController {
         Event event = new Event();
         event.setName(name);
         event.setDescription(description);
+        event.setShortDescription(shortDescription);
         event.setCategory(category);
         event.setOrganizer(organizer);
         event.setImage(imageBytes);
-        event.setStatus(EventStatus.NEW);
+        event.setStatusEvent(EventStatus.NEW);
+        event.setDate(LocalDate.now());
         eventService.saveEvent(event);
 
         return ResponseEntity.ok("Event created successfully!");
