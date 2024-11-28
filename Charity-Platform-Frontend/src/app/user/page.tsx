@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import {  Footer } from "@/components";
-import { Navbar } from "./navbar"
+import { Navbar } from "@/components"
 import Hero from "../hero";
 import Posts from "../posts";
 import Articles from "../articles";

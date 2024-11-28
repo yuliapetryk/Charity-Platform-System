@@ -10,8 +10,9 @@ import store from './store'
 
 export default function Campaign() {
     const router = useRouter();
-
+ 
     return (
+        
         <Provider store={store}>
         <>
             <Navbar />

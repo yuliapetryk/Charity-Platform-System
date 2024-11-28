@@ -1,129 +1,94 @@
 "use client";
 import React from "react";
-import {
-  Navbar as MTNavbar,
-  Collapse,
-  Button,
-  IconButton,
-  Typography,
-} from "@material-tailwind/react";
-import {
-  RectangleStackIcon,
-  UserCircleIcon,
-  CommandLineIcon,
-  XMarkIcon,
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation"; // Import useRouter for navigation
-
-const NAV_MENU = [
-  {
-    name: "Page",
-    icon: RectangleStackIcon,
-  },
-  {
-    name: "Account",
-    icon: UserCircleIcon,
-  },
-  {
-    name: "Docs",
-    icon: CommandLineIcon,
-    href: "https://www.material-tailwind.com/docs/react/installation",
-  },
-];
-
-interface NavItemProps {
-  children: React.ReactNode;
-  href?: string;
-}
-
-function NavItem({ children, href }: NavItemProps) {
-  return (
-    <li>
-      <Typography
-        as="a"
-        href={href || "#"}
-        target={href ? "_blank" : "_self"}
-        variant="paragraph"
-        color="gray"
-        className="flex items-center gap-2 font-medium text-gray-900"
-      >
-        {children}
-      </Typography>
-    </li>
-  );
-}
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../app/tokenSlice";
+import { useRouter } from "next/navigation";
+import { Button, Typography } from "@material-tailwind/react";
+import { RectangleStackIcon, UserCircleIcon, CommandLineIcon } from "@heroicons/react/24/solid";
 
 export function Navbar() {
-  const [open, setOpen] = React.useState(false);
-  const router = useRouter(); // Initialize useRouter for navigation
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const handleOpen = () => setOpen((cur) => !cur);
-
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpen(false)
-    );
-  }, []);
+  const { isAuthenticated } = useSelector((state: any) => state.token);
 
   return (
-    <MTNavbar shadow={false} fullWidth className="border-0 sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between">
+    <nav className="bg-white shadow-lg sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+        {/* Logo */}
         <Typography
-          target="_blank"
+          as="span"
           color="blue-gray"
-          className="text-lg font-bold"
+          className="text-lg font-bold cursor-pointer"
+          onClick={() => router.push("/")}
         >
           Open Hearts
         </Typography>
-        <ul className="ml-10 hidden items-center gap-8 lg:flex">
-          {NAV_MENU.map(({ name, icon: Icon, href }) => (
-            <NavItem key={name} href={href}>
-              <Icon className="h-5 w-5" />
-              {name}
-            </NavItem>
-          ))}
-        </ul>
-        <div className="hidden items-center gap-2 lg:flex">
-          {/* "Sign In" button navigates to the login page */}
-          <Button variant="text" onClick={() => router.push("/login")}>
-            Sign In
-          </Button>
-          <a href="https://www.material-tailwind.com/blocks" target="_blank">
-            <Button color="gray">blocks</Button>
-          </a>
+
+        {/* Centered Navigation Links */}
+        <div className="flex-1 flex justify-center">
+          <ul className="flex gap-8">
+            <li>
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/");
+                }}
+                className="text-gray-900 hover:text-blue-600"
+              >
+                <RectangleStackIcon className="h-5 w-5 inline-block mr-2" />
+                Home
+              </a>
+            </li>
+            {isAuthenticated && (
+              <li>
+                <a
+                  href="/profile"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push("/profile");
+                  }}
+                  className="text-gray-900 hover:text-blue-600"
+                >
+                  <UserCircleIcon className="h-5 w-5 inline-block mr-2" />
+                  Profile
+                </a>
+              </li>
+            )}
+            <li>
+              <a
+                href="https://example.com"
+                target="_blank"
+                className="text-gray-900 hover:text-blue-600"
+              >
+                <CommandLineIcon className="h-5 w-5 inline-block mr-2" />
+                About Us
+              </a>
+            </li>
+          </ul>
         </div>
-        <IconButton
-          variant="text"
-          color="blue-gray"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-          ripple={false}
-          onClick={handleOpen}
-        >
-          {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
-        </IconButton>
-      </div>
-      <Collapse open={open}>
-        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:hidden">
-          {NAV_MENU.map(({ name, icon: Icon, href }) => (
-            <NavItem key={name} href={href}>
-              <Icon className="h-5 w-5" />
-              {name}
-            </NavItem>
-          ))}
-        </ul>
-        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-          <Button variant="text" size="sm" fullWidth onClick={() => router.push("/login")}>
-            Sign In
-          </Button>
-          <a href="https://www.material-tailwind.com/blocks" target="_blank" className="w-full">
-            <Button variant="gradient" size="sm" fullWidth>
-              blocks
+
+        {/* Authentication Buttons */}
+        <div className="flex gap-4">
+          {isAuthenticated ? (
+            <Button
+              variant="text"
+              onClick={() => dispatch(logout())}
+              className="text-gray-900 hover:text-blue-600"
+            >
+              Logout
             </Button>
-          </a>
+          ) : (
+            <Button
+              onClick={() => router.push("/login")}
+              className="bg-blue-500 text-white hover:bg-blue-600"
+            >
+              Login
+            </Button>
+          )}
         </div>
-      </Collapse>
-    </MTNavbar>
+      </div>
+    </nav>
   );
 }
