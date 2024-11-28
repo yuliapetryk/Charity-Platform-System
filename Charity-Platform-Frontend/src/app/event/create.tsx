@@ -29,14 +29,16 @@ const categories = [
 export default function CreateEvent() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [shortDescription, setShortDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [link, setLink] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const token = useSelector((state: RootState) => state.token.value);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
-    if (!name || !description || !category || !image) {
+    if (!name || !description || !shortDescription || !category || !image || !link) {
       alert("Please fill in all fields.");
       return;
     }
@@ -44,7 +46,9 @@ export default function CreateEvent() {
     const formPayload = new FormData();
     formPayload.append("name", name);
     formPayload.append("description", description);
+    formPayload.append("shortDescription", shortDescription);
     formPayload.append("category", category);
+    formPayload.append("link", link);
     formPayload.append("image", image);
   
     try {
@@ -63,8 +67,10 @@ export default function CreateEvent() {
         console.log("Event created successfully!");
         setName("");
         setDescription("");
+        setShortDescription("");
         setCategory("");
         setImage(null);
+        setLink("")
       } else {
         console.log("Failed to create event. Please try again.");
       }
@@ -104,6 +110,19 @@ export default function CreateEvent() {
             />
           </div>
 
+        {/* Description Field */}
+          <div>
+            <Textarea
+              label="Короткий опис події"
+              value={shortDescription}
+              onChange={(e) => setShortDescription(e.target.value)}
+              maxLength={250} 
+              minLength={50} 
+              size="lg"
+              required
+            />
+          </div>
+
           {/* Description Field */}
           <div>
             <Textarea
@@ -111,9 +130,28 @@ export default function CreateEvent() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               size="lg"
+              maxLength={1500} 
+              minLength={50} 
+              className="w-full overflow-hidden resize-none"
+              required
+            />
+            <p className="text-gray-500 text-sm mt-2">
+              {description.length} / 1500 символів
+            </p>
+          </div>
+
+          <div>
+            <Textarea
+              label="Посилання на збір"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              maxLength={100} 
+              minLength={5} 
+              size="lg"
               required
             />
           </div>
+
 
           {/* Category Dropdown */}
           <div>

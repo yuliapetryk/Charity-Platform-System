@@ -1,8 +1,9 @@
+"use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button, Input, Card, Typography } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { setter } from "../tokenSlice";
-import { Button, Input, Card, Typography } from "@material-tailwind/react";
 
 export function Login() {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ export function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const payload = { email, password };
 
     try {
@@ -28,31 +28,11 @@ export function Login() {
 
       const data = await response.json();
       const token = data.token;
-
+      console.log("Token:", token)
       // Save the token in Redux
       dispatch(setter(token));
-
-      // Fetch user role
-      const roleResponse = await fetch("http://localhost:8080/api/role", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Send token in Authorization header
-        },
-      });
-
-      if (!roleResponse.ok) throw new Error("Failed to fetch role");
-
-      const role = await roleResponse.text();
-
-      // Redirect based on role
-      if (role === "ADMIN") {
-        router.push("/admin");
-      } else if (role === "USER") {
-        router.push("/user");
-      } else {
-        console.error("Unknown role");
-      }
+// Dispatch the setter action to store the token
+      router.push("/"); // Redirect to home or dashboard
     } catch (err) {
       console.error(err);
     }
@@ -98,6 +78,14 @@ export function Login() {
             Login
           </Button>
         </form>
+        <footer className="mt-6 text-center">
+          <Typography variant="paragraph" className="text-gray-600">
+            Don't have an account?{" "}
+            <a href="/register" className="text-blue-500 hover:underline">
+              Sign up
+            </a>
+          </Typography>
+        </footer>
       </Card>
     </div>
   );

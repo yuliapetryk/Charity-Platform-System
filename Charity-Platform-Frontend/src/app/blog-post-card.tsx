@@ -1,40 +1,43 @@
 import React from "react";
-import Image from "next/image";
+import Image from "next/image";import type { Metadata } from "next";
+
+import { useRouter } from "next/navigation";
 import {
   Typography,
   Card,
   CardHeader,
   CardBody,
-  Avatar,
-  Button,
 } from "@material-tailwind/react";
 
 interface BlogPostCardProps {
+  id: string; // Unique ID for the post
   img: string;
   tag: string;
   title: string;
   desc: string;
   author: string;
   date: string;
-  link?: string;  // Optional: Link to the full blog post
 }
 
 export function BlogPostCard({
+  id,
   img,
   tag,
   title,
   desc,
   author,
   date,
-  link,
 }: BlogPostCardProps) {
-  console.log("data:", tag, title, desc);
+  const router = useRouter();
 
-  console.log("img:", img);
+  const handleTitleClick = () => {
+    router.push(`/posts/${id}`); // Redirects to a dynamic route based on the post ID
+  };
+
   return (
     <Card shadow={true}>
       <CardHeader>
-      <Image
+        <Image
           width={768}
           height={768}
           src={img}
@@ -48,13 +51,13 @@ export function BlogPostCard({
           {tag}
         </Typography>
 
-        {/* Title with link if 'link' is passed */}
+        {/* Title with click handler */}
         <Typography
-          as={link ? "a" : "div"}
-          href={link || "#"}
+          as="div"
+          onClick={handleTitleClick}
           variant="h5"
           color="blue-gray"
-          className="mb-2 normal-case transition-colors hover:text-gray-900"
+          className="mb-2 normal-case transition-colors hover:text-gray-900 cursor-pointer"
         >
           {title}
         </Typography>
@@ -83,19 +86,6 @@ export function BlogPostCard({
             </Typography>
           </div>
         </div>
-
-        {/* Optional: View More Button */}
-        {/* {link && (
-          <Button
-            color="blue"
-            size="sm"
-            className="mt-4"
-            href={link}
-            target="_blank"
-          >
-            Read More
-          </Button>
-        )} */}
       </CardBody>
     </Card>
   );

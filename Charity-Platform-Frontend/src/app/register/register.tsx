@@ -49,7 +49,7 @@ export function Register() {
       console.log(json)
       if (json?.token){
         dispatch(setter(json.token))
-        router.push("/user");
+        router.push("/login");
       }
     })
     .catch(err =>{
@@ -129,7 +129,7 @@ export function Register() {
                     id="company"
                     name="userType"
                     label="Company"
-                    checked={userType === "INDIVIDUAL"}
+                    checked={userType === "ORGANIZATION"}
                     onChange={() => setUserType("ORGANIZATION")}
                     color="blue"
                   />
