@@ -29,6 +29,8 @@ public class Event {
 
     private String category;
 
+    private String link;
+
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)

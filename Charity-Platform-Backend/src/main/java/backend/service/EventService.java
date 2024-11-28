@@ -37,6 +37,10 @@ public class EventService {
 //        return eventRepository.findPopularEvents();
 //    }
 
+    public List<Event> getEventsByOrganizer(Long organizerId) {
+        return eventRepository.findByOrganizerId(organizerId);
+    }
+
     public void deleteEventById(Long id) {
         eventRepository.deleteById(id);
     }

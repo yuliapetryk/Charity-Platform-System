@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +36,13 @@ public class EventController {
         return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/events/all/user")
+    public List<Event> getEventsByOrganizer(Authentication authentication) {
+        String username = authentication.getName();
+        Long userId = (userService.findByUsername(username).getId());
+        return eventService.getEventsByOrganizer(userId);
+    }
+
     @GetMapping("/category/{category}")
     public List<Event> getEventsByCategory(@PathVariable String category) {
         return eventService.getEventsByCategory(category);
@@ -53,6 +61,7 @@ public class EventController {
             @RequestParam("description") String description,
             @RequestParam("shortDescription") String shortDescription,
             @RequestParam("category") String category,
+            @RequestParam("link") String link,
             @RequestParam("image") MultipartFile image) {
 
         // Extract the token from the Authorization header
@@ -83,6 +92,7 @@ public class EventController {
         event.setCategory(category);
         event.setOrganizer(organizer);
         event.setImage(imageBytes);
+        event.setLink(link);
         event.setStatusEvent(EventStatus.NEW);
         event.setDate(LocalDate.now());
         eventService.saveEvent(event);
