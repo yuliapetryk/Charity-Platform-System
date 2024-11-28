@@ -1,5 +1,6 @@
 package backend.dto;
 
+import backend.entity.Role;
 import backend.entity.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,4 +17,5 @@ public class SignUpRequest {
     String email;
     UserType userType;
     String password;
+    Role role;
 }

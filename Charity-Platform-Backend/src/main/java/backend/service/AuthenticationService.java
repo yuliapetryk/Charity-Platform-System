@@ -6,6 +6,7 @@ import backend.dto.SignUpRequest;
 import backend.entity.User;
 import backend.entity.Role;
 import backend.entity.UserStatus;
+import backend.entity.UserType;
 import backend.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .type(request.getUserType())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(request.getRole())
                 .status(UserStatus.ACTIVE)
                 .build();
 

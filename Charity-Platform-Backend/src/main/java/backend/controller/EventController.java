@@ -36,7 +36,7 @@ public class EventController {
         return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/events/all/user")
+    @GetMapping("/all/user")
     public List<Event> getEventsByOrganizer(Authentication authentication) {
         String username = authentication.getName();
         Long userId = (userService.findByUsername(username).getId());
@@ -109,6 +109,7 @@ public class EventController {
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {

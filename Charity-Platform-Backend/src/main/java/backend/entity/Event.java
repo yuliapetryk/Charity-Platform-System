@@ -37,6 +37,7 @@ public class Event {
     private EventStatus statusEvent;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] image;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
