@@ -10,6 +10,7 @@ import {
 import { ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import BlogPostCard from "@/app/blog-post-card";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export function Posts() {
   const [events, setEvents] = useState<any[]>([]);
@@ -29,25 +30,36 @@ export function Posts() {
     fetchEvents();
   }, []);
 
+  const router = useRouter();
+
+  const handleCategoryClick = (category: string) => {
+    // Navigate to the events page with the selected category as a query parameter
+    router.push(`/allEventsCategory?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <section className="grid min-h-screen place-items-center p-8">
       <Tabs value="trends" className="mx-auto max-w-7xl w-full mb-16 ">
         <div className="w-full flex mb-8 flex-wrap justify-between gap-6">
         <div className="flex flex-col items-center">
-        <button className="w-20 h-20 rounded-full bg-blue-500 text-white flex justify-center items-center">
-          <img src="/image/health.png" alt="Здоров'я" className="w-20 h-20" />
-        </button>
-        <span>
-         <Typography variant="h6" className="mb-2">
-         Здоров'я
-        </Typography>
-        </span>
-        
-      </div>
+          <button
+            className="w-20 h-20 rounded-full bg-blue-500 text-white flex justify-center items-center"
+            onClick={() => handleCategoryClick("Здоров'я")}
+          >
+            <img src="/image/health.png" alt="Здоров'я" className="w-20 h-20" />
+          </button>
+          <span>
+            <Typography variant="h6" className="mb-2">
+              Здоров'я
+            </Typography>
+          </span>
+        </div>
 
       {/* Button for Соціальна допомога */}
       <div className="flex flex-col items-center">
-        <button className="w-20 h-20 rounded-full bg-yellow-400 text-white flex justify-center items-center">
+        <button className="w-20 h-20 rounded-full bg-yellow-400 text-white flex justify-center items-center"
+        onClick={() => handleCategoryClick("Соціальна допомога")}
+        >
           <img src="/image/heart.png" alt="Соціальна допомога" className="w-20 h-20" />
         </button>
         <span>
@@ -60,7 +72,9 @@ export function Posts() {
 
       {/* Button for Екологія та тварини */}
       <div className="flex flex-col items-center">
-        <button className="w-20 h-20 rounded-full bg-green-500 text-white flex justify-center items-center">
+        <button className="w-20 h-20 rounded-full bg-green-500 text-white flex justify-center items-center"
+          onClick={() => handleCategoryClick("Екологія та тварини")}
+          >
           <img src="/image/ecology.png" alt="Екологія та тварини" className="w-20 h-20" />
         </button>
         <span>
@@ -73,7 +87,9 @@ export function Posts() {
 
       {/* Button for Освіта та наука */}
       <div className="flex flex-col items-center">
-        <button className="w-20 h-20 rounded-full bg-orange-500 text-white flex justify-center items-center">
+        <button className="w-20 h-20 rounded-full bg-orange-500 text-white flex justify-center items-center"
+          onClick={() => handleCategoryClick("Освіта та наука")}
+          >
           <img src="/image/world.png" alt="Освіта та наука" className="w-20 h-20" />
         </button>
         <span>
@@ -85,7 +101,9 @@ export function Posts() {
 
       {/* Button for Культура і спорт */}
       <div className="flex flex-col items-center">
-        <button className="w-20 h-20 rounded-full bg-pink-500 text-white flex justify-center items-center">
+        <button className="w-20 h-20 rounded-full bg-pink-500 text-white flex justify-center items-center"
+          onClick={() => handleCategoryClick("Культура і спорт")}
+          >
           <img src="/image/art.png" alt="Культура і спорт" className="w-20 h-20" />
         </button>
         <span>
@@ -97,7 +115,8 @@ export function Posts() {
 
       {/* Button for Усі категорії */}
       <div className="flex flex-col items-center">
-        <button className="w-20 h-20 rounded-full bg-purple-600 text-white flex justify-center items-center">
+        <button className="w-20 h-20 rounded-full bg-purple-600 text-white flex justify-center items-center"
+          onClick={() => handleCategoryClick("")}>
           <img src="/image/others.png" alt="Усі категорії" className="w-20 h-20" />
         </button>
         <span>

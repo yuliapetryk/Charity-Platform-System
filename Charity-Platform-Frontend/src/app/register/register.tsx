@@ -18,6 +18,7 @@ export function Register() {
     const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [userType, setUserType] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,6 +30,7 @@ export function Register() {
       email,
       userType,
       password,
+      role,
     });
 
     const payload = {
@@ -36,7 +38,8 @@ export function Register() {
       lastName: lastName,
       email: email,
       userType: userType,
-      password: password
+      password: password,
+      role: "USER",
     }
 
     fetch('http://localhost:8080/api/signup', {

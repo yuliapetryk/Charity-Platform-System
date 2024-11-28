@@ -74,8 +74,11 @@ export function Navbar() {
           {isAuthenticated ? (
             <Button
               variant="text"
-              onClick={() => dispatch(logout())}
-              className="text-gray-900 hover:text-blue-600"
+              onClick={() => {
+                dispatch(logout());
+                router.push("/");
+              }}
+                            className="text-gray-900 hover:text-blue-600"
             >
               Logout
             </Button>
