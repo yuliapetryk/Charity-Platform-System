@@ -13,6 +13,7 @@ export default function Campaign() {
     return (
         <Provider store={store}>
         <>
+            <title>Open Hearts</title>
             <Navbar />
             <CreateEvent />
             <Footer />

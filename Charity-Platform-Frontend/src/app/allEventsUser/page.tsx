@@ -11,6 +11,7 @@ const EventPage = () => {
   return (
     <Provider store={store}>
       <>
+        <title>Open Hearts</title>
         <Navbar />
         <EventDetail />
         <Footer />

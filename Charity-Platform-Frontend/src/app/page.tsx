@@ -15,6 +15,7 @@ export default function Campaign() {
         
         <Provider store={store}>
         <>
+            <title>Open Hearts</title>
             <Navbar />
             <Hero />
             <Posts />

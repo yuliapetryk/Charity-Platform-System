@@ -14,6 +14,7 @@ export default function Campaign() {
         <Provider store={store}>
 
         <>
+            <title>Open Hearts</title>
             <Navbar />
             <Profile/>
             <Footer />

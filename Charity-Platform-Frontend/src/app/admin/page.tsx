@@ -14,6 +14,7 @@ export default function Campaign() {
     return (
         <Provider store={store}>
         <>
+         <title>Open Hearts</title>
             <Navbar />
             <Hero />
             <button onClick={() => router.push("/login")}>Sign In</button>
