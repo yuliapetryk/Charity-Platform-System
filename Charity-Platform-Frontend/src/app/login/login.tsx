@@ -46,7 +46,7 @@ export function Login() {
             color="blue-gray"
             className="text-[30px] lg:text-[36px] font-bold"
           >
-            Login to Open Hearts
+            Увіти до Open Hearts
           </Typography>
         </header>
         <form onSubmit={handleLogin} className="mt-8">
@@ -75,14 +75,14 @@ export function Login() {
             fullWidth
             className="bg-blue-500 text-white hover:bg-blue-600"
           >
-            Login
+            Увійти
           </Button>
         </form>
         <footer className="mt-6 text-center">
           <Typography variant="paragraph" className="text-gray-600">
-            Don't have an account?{" "}
+            Ви у нас уперше?{" "}
             <a href="/register" className="text-blue-500 hover:underline">
-              Sign up
+              Зареєстуйтесь!
             </a>
           </Typography>
         </footer>

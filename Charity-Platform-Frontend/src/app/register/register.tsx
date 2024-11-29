@@ -60,7 +60,6 @@ export function Register() {
     })
 
 
-    // Add your registration logic here
   };
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -70,20 +69,20 @@ export function Register() {
                 color="blue-gray"
                 className="text-[30px] lg:text-[36px] font-bold"
               >
-                Register to Open Hearts
+                Зареєструватися у  Open Hearts
               </Typography>
               <Typography
                 variant="paragraph"
                 className="mt-2 text-gray-600"
               >
-                Join us to support charitable initiatives.
+                Долучайтеся до підтримки благодійних ініціатив.
               </Typography>
             </header>
             <form onSubmit={handleRegister} className="mt-8 space-y-6">
               {/* First Name */}
               <div>
                 <Input
-                  label="First Name"
+                  label="Ім'я"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   size="lg"
@@ -94,7 +93,7 @@ export function Register() {
               {/* Second Name */}
               <div>
                 <Input
-                  label="Second Name"
+                  label="Прізвище"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   size="lg"
@@ -105,7 +104,7 @@ export function Register() {
               {/* Email */}
               <div>
                 <Input
-                  label="Email"
+                  label="Електронна адреса"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -117,13 +116,13 @@ export function Register() {
               {/* User Type */}
               <div className="flex flex-col gap-2">
                 <Typography variant="small" className="text-gray-700">
-                  Type of User:
+                  Тип користувача:
                 </Typography>
                 <div className="flex gap-4">
                   <Radio
                     id="personal"
                     name="userType"
-                    label="Personal"
+                    label="Особистий"
                     checked={userType === "INDIVIDUAL"}
                     onChange={() => setUserType("INDIVIDUAL")}
                     color="blue"
@@ -131,7 +130,7 @@ export function Register() {
                   <Radio
                     id="company"
                     name="userType"
-                    label="Company"
+                    label="Компанія"
                     checked={userType === "ORGANIZATION"}
                     onChange={() => setUserType("ORGANIZATION")}
                     color="blue"
@@ -142,7 +141,7 @@ export function Register() {
               {/* Password */}
               <div>
                 <Input
-                  label="Password"
+                  label="Пароль"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -157,7 +156,7 @@ export function Register() {
                 fullWidth
                 className="bg-blue-500 text-white hover:bg-blue-600"
               >
-                Register
+                Підтвердити
               </Button>
             </form>
             <footer className="mt-6 text-center">
@@ -165,12 +164,12 @@ export function Register() {
                 variant="paragraph"
                 className="text-gray-600"
               >
-                Already have an account?{" "}
+                Уже зареєтровані?{" "}
                 <a
                   href="/login"
                   className="text-blue-500 hover:underline"
                 >
-                  Sign in
+                  Увійти
                 </a>
               </Typography>
             </footer>
