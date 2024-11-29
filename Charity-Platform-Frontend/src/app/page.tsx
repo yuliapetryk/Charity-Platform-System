@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Navbar, Footer } from "@/components";
 import Hero from "./hero";
-import Posts from "./posts";
+import Posts from "./newEvents";
 import Articles from "./articles";
 import {Provider} from 'react-redux'
 import store from './store'
