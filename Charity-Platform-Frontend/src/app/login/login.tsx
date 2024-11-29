@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Input, Card, Typography } from "@material-tailwind/react";
+import { Button, Input, Card, Typography, Alert } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { setter } from "../tokenSlice";
 
@@ -11,6 +11,7 @@ export function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,17 +25,22 @@ export function Login() {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!response.ok) throw new Error("Login failed");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed"); // Use server error message if available
+      }
 
       const data = await response.json();
       const token = data.token;
-      console.log("Token:", token)
+      console.log("Token:", token);
+
       // Save the token in Redux
       dispatch(setter(token));
-// Dispatch the setter action to store the token
-      router.push("/"); // Redirect to home or dashboard
-    } catch (err) {
-      console.error(err);
+
+      // Redirect to home or dashboard
+      router.push("/");
+    } catch (err: any) {
+      setErrorMessage(err.message || "Unable to login. Please try again.");
     }
   };
 
@@ -44,11 +50,16 @@ export function Login() {
         <header className="text-center">
           <Typography
             color="blue-gray"
-            className="text-[30px] lg:text-[36px] font-bold"
+            className="text-[30px] lg:text-[34px] font-bold"
           >
-            Увіти до Open Hearts
+          Увійти до Open Hearts
           </Typography>
         </header>
+        {errorMessage && (
+          <Alert color="red" className="mt-4">
+            {"На жаль, ви ввели неправильний логін або пароль"}
+          </Alert>
+        )}
         <form onSubmit={handleLogin} className="mt-8">
           <div className="mb-6">
             <Input
