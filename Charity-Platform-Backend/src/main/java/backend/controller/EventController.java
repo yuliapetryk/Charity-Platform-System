@@ -3,12 +3,15 @@ package backend.controller;
 import backend.entity.Event;
 import backend.entity.EventStatus;
 import backend.entity.User;
+import backend.exception.ResourceNotFoundException;
 import backend.service.EventService;
 import backend.service.JwtService;
 import backend.service.UserService;
+import com.sun.jdi.request.EventRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -143,6 +146,27 @@ public class EventController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Invalid status: " + newStatus);
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody Event request, Authentication authentication) {
+
+        Event event = (eventService.getEventById(id)).orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+
+        String username = authentication.getName();
+        User user = (userService.findByUsername(username));
+
+        if (!event.getOrganizer().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to edit this event");
+        }
+
+        event.setName(request.getName());
+        event.setCategory(request.getCategory());
+        event.setDescription(request.getDescription());
+        event.setLink(request.getLink());
+        eventService.saveEvent(event);
+
+        return ResponseEntity.ok("Event updated successfully");
     }
 
     @DeleteMapping("/{id}")
