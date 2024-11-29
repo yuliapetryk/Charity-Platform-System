@@ -9,6 +9,7 @@ import backend.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -125,6 +127,22 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventsSortedByDate() {
         List<Event> events = eventService.getEventsSortedByDate();
         return ResponseEntity.ok(events);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<?> updateEventStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> requestBody) {
+
+        String newStatus = requestBody.get("status");
+        try {
+            EventStatus eventStatus = EventStatus.valueOf(newStatus.toUpperCase());
+            Event updatedEvent = eventService.updateEventStatus(id, eventStatus);
+            return ResponseEntity.ok(updatedEvent);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Invalid status: " + newStatus);
+        }
     }
 
     @DeleteMapping("/{id}")

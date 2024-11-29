@@ -1,6 +1,7 @@
 package backend.service;
 
 import backend.entity.Event;
+import backend.entity.EventStatus;
 import backend.entity.User;
 import backend.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class EventService {
         return eventRepository.findById(id);
     }
 
+
     public List<Event> getEventsByCategory(String category) {
         return eventRepository.findByCategory(category);
     }
@@ -43,6 +45,18 @@ public class EventService {
 
     public List<Event> getEventsSortedByDate() {
         return eventRepository.findAllByOrderByDateDesc();
+    }
+
+    public Event updateEventStatus(Long id, EventStatus newStatus) {
+        Optional<Event> optionalEvent = getEventById(id);
+
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            event.setStatusEvent(newStatus);
+            return eventRepository.save(event);
+        } else {
+            throw new IllegalArgumentException("Event not found with id: " + id);
+        }
     }
 
     public void deleteEventById(Long id) {

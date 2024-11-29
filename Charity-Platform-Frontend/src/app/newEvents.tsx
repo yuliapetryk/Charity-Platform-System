@@ -21,8 +21,10 @@ export function Posts() {
       try {
         const response = await fetch("http://localhost:8080/api/events/sorted-by-date");
         const data = await response.json();
-        setEvents(data);
-        setVisibleEvents(data.slice(0, itemsToShow)); // Display the first 6 events
+        const confirmedEvents = data.filter((event: any) => event.statusEvent === "CONFIRMED");
+        
+        setEvents(confirmedEvents); // Store only confirmed events
+        setVisibleEvents(confirmedEvents.slice(0, itemsToShow));
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -35,6 +37,7 @@ export function Posts() {
 
   const handleCategoryClick = (category: string) => {
     router.push(`/allEventsCategory?category=${encodeURIComponent(category)}`);
+    
   };
 
   const handleViewMore = () => {
@@ -143,7 +146,7 @@ export function Posts() {
         Проєкт OPEN HEARTS - це більше, ніж збір благодійної допомоги, це об'єднання заради спільної мети.
       </Typography>
       <Typography variant="h6" className="mb-10">
-        Популярні проєкти
+        Нові проєкти
       </Typography>
 
       {/* Display the visible events */}

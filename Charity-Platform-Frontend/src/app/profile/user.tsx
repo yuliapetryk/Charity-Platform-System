@@ -126,7 +126,7 @@ export function Profile() {
               <Button
                 variant="outlined"
                 color="green"
-                onClick={() => router.push(`/allEvents`)}
+                onClick={() => router.push(`/allEventsAdmin`)}
                 className="w-full"
               >
                 See All Events
