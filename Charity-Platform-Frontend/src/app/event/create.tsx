@@ -89,20 +89,20 @@ export default function CreateEvent() {
             color="blue-gray"
             className="text-[30px] lg:text-[36px] font-bold"
           >
-            Створити подію
+            Створити оголошення
           </Typography>
           <Typography
             variant="paragraph"
             className="mt-2 text-gray-600"
           >
-            Create and share your charitable event.
+            Створіть і поділіться своєю благодійною акцією.
           </Typography>
         </header>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           {/* Name Field */}
           <div>
             <Input
-              label="Назва події"
+              label="Назва акції"
               value={name}
               onChange={(e) => setName(e.target.value)}
               size="lg"
@@ -113,7 +113,7 @@ export default function CreateEvent() {
         {/* Description Field */}
           <div>
             <Textarea
-              label="Короткий опис події"
+              label="Короткий опис акції"
               value={shortDescription}
               onChange={(e) => setShortDescription(e.target.value)}
               maxLength={250} 
@@ -126,7 +126,7 @@ export default function CreateEvent() {
           {/* Description Field */}
           <div>
             <Textarea
-              label="Опис події"
+              label="Опис акції"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               size="lg"
