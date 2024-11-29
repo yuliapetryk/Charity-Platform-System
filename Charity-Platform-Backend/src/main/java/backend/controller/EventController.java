@@ -45,9 +45,20 @@ public class EventController {
 
     @GetMapping("/category/{category}")
     public List<Event> getEventsByCategory(@PathVariable String category) {
-        return eventService.getEventsByCategory(category);
-    }
+        String realCategory = switch (category) {
+            case "health" -> "Здоров'я";
+            case "social" -> "Соціальна допомога";
+            case "ecology" -> "Екологія та тварини";
+            case "education" -> "Освіта та наука";
+            case "sport" -> "Культура і спорт";
+            default -> "Соціальна допомога";
+        };
 
+        // Log the resolved category
+        logger.info("Resolved category: {}", realCategory);
+
+        return eventService.getEventsByCategory(realCategory);
+    }
     @Autowired
     private UserService userService;  // Service to fetch User from the database
 
