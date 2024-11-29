@@ -49,10 +49,10 @@ export function Posts() {
       <div className="mb-8 w-full max-w-md">
         <Input
           type="text"
-          label="Search by Name"
+          label="Шукати за назвою"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Enter event name"
+          placeholder="Введіть назву"
         />
       </div>
 
@@ -82,7 +82,7 @@ export function Posts() {
         className="flex items-center gap-2 mt-24"
       >
         <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-        VIEW MORE
+       Більше
       </Button>
     </section>
   );

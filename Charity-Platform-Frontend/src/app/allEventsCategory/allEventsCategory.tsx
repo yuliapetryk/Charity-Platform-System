@@ -59,7 +59,7 @@ export function Posts() {
         className="flex items-center gap-2 mt-24"
       >
         <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-        VIEW MORE
+        Більше
       </Button>
     </section>
   );

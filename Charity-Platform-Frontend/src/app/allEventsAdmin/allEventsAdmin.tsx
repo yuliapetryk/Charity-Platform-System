@@ -88,10 +88,10 @@ export function Posts() {
       <div className="mb-8 w-full max-w-md">
         <Input
           type="text"
-          label="Search by Name"
+          label="Шукати за назвою"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Enter event name"
+          placeholder="Введіть назву"
         />
       </div>
 
@@ -101,7 +101,7 @@ export function Posts() {
           color="blue"
           onClick={showNewEventsOnly ? showAllEvents : filterNewEvents}
         >
-          {showNewEventsOnly ? "Show All Events" : "Show Only New Events"}
+          {showNewEventsOnly ? "Показати усі події" : "Показати нові події"}
         </Button>
       </div>
 
@@ -145,13 +145,13 @@ export function Posts() {
                       color="green"
                       onClick={() => updateEventStatus(id, "CONFIRMED")}
                     >
-                      Approve
+                      Підтвердити
                     </Button>
                     <Button
                       color="red"
                       onClick={() => updateEventStatus(id, "CANCELED")}
                     >
-                      Cancel
+                      Скасувати
                     </Button>
                   </div>
                 )
@@ -164,7 +164,7 @@ export function Posts() {
                   statusEvent === "CONFIRMED" ? "text-green-500" : "text-red-500"
                 }`}
               >
-                Status: {statusEvent}
+                Статус: {statusEvent}
               </Typography>
             </div>
           )
@@ -179,7 +179,7 @@ export function Posts() {
         className="flex items-center gap-2 mt-24"
       >
         <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-        VIEW MORE
+        Більше
       </Button>
     </section>
   );
