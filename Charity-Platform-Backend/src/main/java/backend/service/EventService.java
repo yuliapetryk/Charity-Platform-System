@@ -41,6 +41,10 @@ public class EventService {
         return eventRepository.findByOrganizerId(organizerId);
     }
 
+    public List<Event> getEventsSortedByDate() {
+        return eventRepository.findAllByOrderByDateDesc();
+    }
+
     public void deleteEventById(Long id) {
         eventRepository.deleteById(id);
     }

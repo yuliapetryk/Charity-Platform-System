@@ -121,6 +121,11 @@ public class EventController {
         return eventService.getAllEvents();
     }
 
+    @GetMapping("/sorted-by-date")
+    public ResponseEntity<List<Event>> getEventsSortedByDate() {
+        List<Event> events = eventService.getEventsSortedByDate();
+        return ResponseEntity.ok(events);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {

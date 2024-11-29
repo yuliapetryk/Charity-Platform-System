@@ -44,7 +44,7 @@ export function Posts() {
         <div className="flex flex-col items-center">
           <button
             className="w-20 h-20 rounded-full bg-blue-500 text-white flex justify-center items-center"
-            onClick={() => handleCategoryClick("Здоров'я")}
+            onClick={() => handleCategoryClick("health")}
           >
             <img src="/image/health.png" alt="Здоров'я" className="w-20 h-20" />
           </button>
@@ -58,7 +58,7 @@ export function Posts() {
       {/* Button for Соціальна допомога */}
       <div className="flex flex-col items-center">
         <button className="w-20 h-20 rounded-full bg-yellow-400 text-white flex justify-center items-center"
-        onClick={() => handleCategoryClick("Соціальна допомога")}
+        onClick={() => handleCategoryClick("social")}
         >
           <img src="/image/heart.png" alt="Соціальна допомога" className="w-20 h-20" />
         </button>
@@ -73,7 +73,7 @@ export function Posts() {
       {/* Button for Екологія та тварини */}
       <div className="flex flex-col items-center">
         <button className="w-20 h-20 rounded-full bg-green-500 text-white flex justify-center items-center"
-          onClick={() => handleCategoryClick("Екологія та тварини")}
+          onClick={() => handleCategoryClick("ecology")}
           >
           <img src="/image/ecology.png" alt="Екологія та тварини" className="w-20 h-20" />
         </button>
@@ -88,7 +88,7 @@ export function Posts() {
       {/* Button for Освіта та наука */}
       <div className="flex flex-col items-center">
         <button className="w-20 h-20 rounded-full bg-orange-500 text-white flex justify-center items-center"
-          onClick={() => handleCategoryClick("Освіта та наука")}
+          onClick={() => handleCategoryClick("education")}
           >
           <img src="/image/world.png" alt="Освіта та наука" className="w-20 h-20" />
         </button>
@@ -102,7 +102,7 @@ export function Posts() {
       {/* Button for Культура і спорт */}
       <div className="flex flex-col items-center">
         <button className="w-20 h-20 rounded-full bg-pink-500 text-white flex justify-center items-center"
-          onClick={() => handleCategoryClick("Культура і спорт")}
+          onClick={() => handleCategoryClick("sport")}
           >
           <img src="/image/art.png" alt="Культура і спорт" className="w-20 h-20" />
         </button>
@@ -116,7 +116,7 @@ export function Posts() {
       {/* Button for Усі категорії */}
       <div className="flex flex-col items-center">
         <button className="w-20 h-20 rounded-full bg-purple-600 text-white flex justify-center items-center"
-          onClick={() => handleCategoryClick("")}>
+          onClick={() =>  router.push(`/allEvents`)}>
           <img src="/image/others.png" alt="Усі категорії" className="w-20 h-20" />
         </button>
         <span>

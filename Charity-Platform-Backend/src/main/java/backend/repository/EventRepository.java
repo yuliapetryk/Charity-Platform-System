@@ -21,5 +21,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT e FROM Event e WHERE e.organizer.id = :organizerId")
     List<Event> findByOrganizerId(@Param("organizerId") Long organizerId);
 
+    @Transactional(readOnly = true)
+    List<Event> findAllByOrderByDateDesc();
 
 }
