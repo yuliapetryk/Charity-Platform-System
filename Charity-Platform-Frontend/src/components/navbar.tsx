@@ -38,7 +38,7 @@ export function Navbar() {
                 className="text-gray-900 hover:text-blue-600"
               >
                 <RectangleStackIcon className="h-5 w-5 inline-block mr-2" />
-                Home
+                Головна
               </a>
             </li>
             {isAuthenticated && (
@@ -52,18 +52,21 @@ export function Navbar() {
                   className="text-gray-900 hover:text-blue-600"
                 >
                   <UserCircleIcon className="h-5 w-5 inline-block mr-2" />
-                  Profile
+                  Профіль
                 </a>
               </li>
             )}
             <li>
               <a
-                href="https://example.com"
-                target="_blank"
+                href="/aboutUs"
                 className="text-gray-900 hover:text-blue-600"
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/aboutUs");
+                }}
               >
                 <CommandLineIcon className="h-5 w-5 inline-block mr-2" />
-                About Us
+                Про нас
               </a>
             </li>
           </ul>
@@ -80,14 +83,14 @@ export function Navbar() {
               }}
                             className="text-gray-900 hover:text-blue-600"
             >
-              Logout
+              Вийти
             </Button>
           ) : (
             <Button
               onClick={() => router.push("/login")}
               className="bg-blue-500 text-white hover:bg-blue-600"
             >
-              Login
+               Увійти
             </Button>
           )}
         </div>

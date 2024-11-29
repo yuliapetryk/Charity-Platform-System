@@ -17,14 +17,13 @@ export function Footer() {
             className="text-2xl md:text-3xl text-center font-bold "
             color="white"
           >
-            Join our community!
+            Приєднуйтесь на нашої спільноти!
           </Typography>
           <Typography
             color="white"
             className=" md:w-7/12 text-center my-3 !text-base"
           >
-            Get news in your inbox every week! We hate spam too, so no worries
-            about this.
+            Отримуйте сповіщення про нові благодійні події та збори. Зробіть свою участь ще більш активною!
           </Typography>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 md:flex-row">
             <div className="w-80">
@@ -32,35 +31,20 @@ export function Footer() {
               <Input label="Email" color="white" />
             </div>
             <Button size="md" className="lg:w-32" fullWidth color="white">
-              subscribe
+              Підписатись
             </Button>
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-center !justify-between">
           <Typography
             as="a"
-            href="https://www.material-tailwind.com"
-            target="_blank"
+            href="/"
             variant="h6"
             className="text-gray-900"
           >
-            Material Tailwind
+            Open Hearts
           </Typography>
-          <ul className="flex justify-center my-4 md:my-0 w-max mx-auto items-center gap-4">
-            {LINKS.map((link, index) => (
-              <li key={index}>
-                <Typography
-                  as="a"
-                  href="#"
-                  variant="small"
-                  color="white"
-                  className="font-normal !text-gray-700 hover:!text-gray-900 transition-colors"
-                >
-                  {link}
-                </Typography>
-              </li>
-            ))}
-          </ul>
+        
           <div className="flex w-fit justify-center gap-2">
             <IconButton size="sm" color="gray" variant="text">
               <i className="fa-brands fa-twitter text-lg" />
@@ -81,14 +65,11 @@ export function Footer() {
           className="text-center mt-12 font-normal !text-gray-700"
         >
           &copy; {CURRENT_YEAR} Made with{" "}
-          <a href="https://www.material-tailwind.com" target="_blank">
+          <a href="/" target="_blank">
           Open Hearts 
           </a>{" "}
-          by{" "}
-          <a href="https://www.creative-tim.com" target="_blank">
-            Creative Tim
-          </a>
-          .
+        
+          
         </Typography>
       </div>
     </footer>
