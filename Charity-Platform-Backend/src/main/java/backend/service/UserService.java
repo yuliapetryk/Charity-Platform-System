@@ -2,6 +2,7 @@ package backend.service;
 
 import backend.entity.Role;
 import backend.entity.User;
+import backend.exception.ResourceNotFoundException;
 import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,7 +53,18 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
+    public User updateUserProfile(Long userId, User userProfileDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
+        // Update the user's information
+        user.setFirstName(userProfileDTO.getFirstName());
+        user.setLastName(userProfileDTO.getLastName());
+        user.setEmail(userProfileDTO.getEmail());
+
+        // Save and return the updated user
+        return userRepository.save(user);
+    }
 
 
 

@@ -3,12 +3,11 @@ package backend.controller;
 import backend.entity.User;
 import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -42,5 +41,16 @@ public class UserController {
         User user = (userService.findByUsername(username));
 
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<User> updateUserProfile(Authentication currentUser,
+                                                  @RequestBody User userProfileDTO) {
+
+        String username = currentUser.getName();
+        User user = (userService.findByUsername(username));
+
+        User updatedUser = userService.updateUserProfile(user.getId(), userProfileDTO);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 }
