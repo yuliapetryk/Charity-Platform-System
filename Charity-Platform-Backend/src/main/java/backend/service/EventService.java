@@ -22,6 +22,9 @@ public class EventService {
     @Autowired
     private FavoriteEventsService favoriteEventsService;
 
+    @Autowired
+    private EventScoreService eventScoreService;
+
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
@@ -75,34 +78,36 @@ public class EventService {
 
         return allEvents.stream()
                 .sorted((e1, e2) -> {
-                    double popularity1 = e1.getViews() * 0.3 + favoriteEventsService.getFavoriteEventCount(e1.getId());
-                    double popularity2 = e2.getViews() * 0.3 + favoriteEventsService.getFavoriteEventCount(e2.getId());
+                    double popularity1 = e1.getViews() * 0.3
+                            + favoriteEventsService.getFavoriteEventCount(e1.getId()) * 0.5
+                            + eventScoreService.getAverageScore(e1.getId()) * 0.2;
+                    double popularity2 = e2.getViews() * 0.3
+                            + favoriteEventsService.getFavoriteEventCount(e2.getId()) * 0.5
+                            + eventScoreService.getAverageScore(e2.getId()) * 0.2;
+
                     return Double.compare(popularity2, popularity1); // Sort by descending popularity
                 })
                 .collect(Collectors.toList());
     }
 
     public List<EventStatisticsDTO> getUserEventStatistics(Long userId) {
-        // Step 1: Fetch all events created by the user
         List<Event> userEvents = eventRepository.findByOrganizerId(userId);
 
-        // Step 2: Map events to EventStatisticsDTO
         return userEvents.stream().map(event -> {
-            // Fetch views from the Event entity
             Long views = event.getViews();
-
-            // Fetch the count of times the event is added to favorites
             Long favoriteCount = favoriteEventsService.countByEventId(event.getId());
+            float averageScore = eventScoreService.getAverageScore(event.getId());
 
-            // Create the DTO
             return new EventStatisticsDTO(
                     event.getName(),
                     event.getDate(),
                     views,
-                    favoriteCount
+                    favoriteCount,
+                    averageScore
             );
         }).collect(Collectors.toList());
     }
+
 
     public void deleteEventById(Long id) {
         eventRepository.deleteById(id);

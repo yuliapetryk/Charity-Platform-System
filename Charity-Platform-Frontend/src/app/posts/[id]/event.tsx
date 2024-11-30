@@ -9,6 +9,9 @@ const EventDetail = ({ id }: { id: any }) => {
   const [event, setEvent] = useState<any>(null);
   const [isAuthor, setIsAuthor] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isRated, setIsRated] = useState<boolean>(false);
+  const [averageScore, setAverageScore] = useState<number | null>(null);
+  const [userRating, setUserRating] = useState<number | null>(null); // Store the user's rating
   const token = useSelector((state: any) => state.token.value);
   const [role, setRole] = useState<string | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
@@ -39,15 +42,27 @@ const EventDetail = ({ id }: { id: any }) => {
         const userRole = await roleResponse.text();
         setRole(userRole);
 
+        // Fetch average score of the event
+        const scoreResponse = await fetch(`http://localhost:8080/api/${id}/average-score`);
+        const avgScore = await scoreResponse.json();
+        console.log("Score:", avgScore);
+        setAverageScore(avgScore);
+
         // Check if the event is favorited
         const favoriteResponse = await fetch(`http://localhost:8080/api/favorite`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const favorites = await favoriteResponse.json();
-        console.log("Favorite ", favorites, id)
-        console.log(favorites.includes(Number(id)));
         setIsFavorite(favorites.includes(Number(id)));
 
+        // Check if the user has rated the event
+        const ratingResponse = await fetch(`http://localhost:8080/api/${id}/user-rating`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const userRatingData = await ratingResponse.json();
+        
+        setIsRated(userRatingData); // Set the user's rating if available
+        console.log("Is rated:", userRatingData)
         // Check if the user is the author
         setIsAuthor(eventData.organizer.id === userIdData && userRole === "USER");
       } catch (error) {
@@ -71,6 +86,32 @@ const EventDetail = ({ id }: { id: any }) => {
       setIsFavorite(!isFavorite);
     } catch (error) {
       console.error("Error toggling favorite status:", error);
+    }
+  };
+
+  const handleRatingClick = async (rating: number) => {
+    if (rating >= 1 && rating <= 5 && userRating === null) {
+      try {
+        // Send the rating to the backend
+        await fetch(`http://localhost:8080/api/${id}/score`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(rating),
+        });
+
+        // After rating, fetch the updated average score
+        const scoreResponse = await fetch(`http://localhost:8080/api/${id}/average-score`);
+        const avgScore = await scoreResponse.json();
+        setAverageScore(avgScore);
+
+        // Update the user rating
+        setUserRating(rating);
+      } catch (error) {
+        console.error("Error submitting rating:", error);
+      }
     }
   };
 
@@ -123,6 +164,46 @@ const EventDetail = ({ id }: { id: any }) => {
             <Typography variant="small" color="blue-gray" className="mt-6">
               Організатор: {event.organizer.firstName + " " + event.organizer.lastName}
             </Typography>
+
+            {/* Display Average Score */}
+            {averageScore !== null && averageScore !== 0 && (
+              <Typography variant="h6" color="blue-gray" className="mt-4">
+                Середня оцінка: {averageScore.toFixed(2)}
+              </Typography>
+            )}
+
+            {/* Rating Buttons */}
+{role === "USER" && !isRated && (
+  <div className="mt-6">
+    <Typography variant="h6" color="blue-gray" className="mb-4">
+      Оцініть актуальність події:
+    </Typography>
+    <div className="flex gap-2">
+      {[1, 2, 3, 4, 5].map((rating) => (
+        <button
+          key={rating}
+          onClick={() => handleRatingClick(rating)}
+          className={`p-3 rounded-full text-white ${
+            userRating === rating
+              ? "bg-green-500"
+              : rating === 1
+              ? "bg-red-500"
+              : rating === 2
+              ? "bg-orange-500"
+              : rating === 3
+              ? "bg-yellow-500"
+              : rating === 4
+              ? "bg-lime-500"
+              : "bg-green-500"
+          }`}
+          title={`Rate ${rating}`}
+        >
+          {rating}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
             {/* Favorite Button */}
             {role === "USER" && (

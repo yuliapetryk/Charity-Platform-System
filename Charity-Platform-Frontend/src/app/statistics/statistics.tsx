@@ -9,6 +9,7 @@ interface EventStatistics {
   date: string;
   views: number;
   favoritesCount: number;
+  score : number;
 }
 
 export default function Statistics() {
@@ -37,6 +38,7 @@ export default function Statistics() {
         if (!response.ok) throw new Error("Failed to fetch statistics");
 
         const data = await response.json();
+        console.log("Statistics:", data)
         setStatistics(data);
       } catch (error) {
         console.error(error);
@@ -76,6 +78,7 @@ export default function Statistics() {
                   <TableCell className="font-bold">Дата</TableCell>
                   <TableCell className="font-bold">Перегляди</TableCell>
                   <TableCell className="font-bold">Додано в обране</TableCell>
+                  <TableCell className="font-bold">Актуальність</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -88,6 +91,7 @@ export default function Statistics() {
                     <TableCell>{new Date(event.date).toLocaleDateString("uk-UA")}</TableCell>
                     <TableCell>{event.views}</TableCell>
                     <TableCell>{event.favoritesCount}</TableCell>
+                    <TableCell>{event.score}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

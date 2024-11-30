@@ -223,6 +223,15 @@ export function Profile() {
                 >
                   <DocumentIcon className="w-5 h-5" /> Переглянути всі оголошення
                 </Button>
+
+                <Button
+                  variant="outlined"
+                  color="purple"
+                  onClick={() => router.push(`/statisticsAdmin`)} // Redirect to the statistics page
+                  className="w-full flex items-center gap-2"
+                >
+                 <UserIcon className="w-5 h-5" /> Переглянути статистику
+                 </Button>
               </>
             ) : null}
           </div>

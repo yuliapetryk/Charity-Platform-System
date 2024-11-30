@@ -213,6 +213,8 @@ public class EventController {
         return ResponseEntity.ok(statistics);
     }
 
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.deleteEventById(id);
