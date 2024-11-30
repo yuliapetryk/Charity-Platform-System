@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -9,7 +8,7 @@ import { UserIcon, CogIcon, ArrowLeftIcon, DocumentIcon } from "@heroicons/react
 export function Profile() {
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   const token = useSelector((state: any) => state.token.value); // Access token from Redux store
   const [userInfo, setUserInfo] = useState<any>(null); // State to store user info
   const [loading, setLoading] = useState<boolean>(true); // State to handle loading
@@ -184,6 +183,16 @@ export function Profile() {
                   className="w-full flex items-center gap-2"
                 >
                   <CogIcon className="w-5 h-5" /> Переглянути мої оголошення
+                </Button>
+
+                {/* New Button to See Favorite Events */}
+                <Button
+                  variant="outlined"
+                  color="yellow"
+                  onClick={() => router.push(`/favoriteEvents`)}
+                  className="w-full flex items-center gap-2"
+                >
+                  <CogIcon className="w-5 h-5" /> Переглянути мої улюблені події
                 </Button>
               </>
             ) : userInfo.role === "ADMIN" ? (
