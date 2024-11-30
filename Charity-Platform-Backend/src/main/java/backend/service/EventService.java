@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.dto.EventStatisticsDTO;
 import backend.entity.Event;
 import backend.entity.EventStatus;
 import backend.entity.User;
@@ -10,12 +11,17 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private FavoriteEventsService favoriteEventsService;
+
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
@@ -59,7 +65,44 @@ public class EventService {
         }
     }
 
+    public Long getEventViewsById(Long eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Event not found"));
+        return event.getViews();
+    }
 
+    public List<Event> getEventsByPopularity() {
+        List<Event> allEvents = eventRepository.findAll();
+
+        return allEvents.stream()
+                .sorted((e1, e2) -> {
+                    double popularity1 = e1.getViews() * 0.3 + favoriteEventsService.getFavoriteEventCount(e1.getId());
+                    double popularity2 = e2.getViews() * 0.3 + favoriteEventsService.getFavoriteEventCount(e2.getId());
+                    return Double.compare(popularity2, popularity1); // Sort by descending popularity
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<EventStatisticsDTO> getUserEventStatistics(Long userId) {
+        // Step 1: Fetch all events created by the user
+        List<Event> userEvents = eventRepository.findByOrganizerId(userId);
+
+        // Step 2: Map events to EventStatisticsDTO
+        return userEvents.stream().map(event -> {
+            // Fetch views from the Event entity
+            Long views = event.getViews();
+
+            // Fetch the count of times the event is added to favorites
+            Long favoriteCount = favoriteEventsService.countByEventId(event.getId());
+
+            // Create the DTO
+            return new EventStatisticsDTO(
+                    event.getName(),
+                    event.getDate(),
+                    views,
+                    favoriteCount
+            );
+        }).collect(Collectors.toList());
+    }
 
     public void deleteEventById(Long id) {
         eventRepository.deleteById(id);

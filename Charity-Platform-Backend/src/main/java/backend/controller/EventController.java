@@ -1,5 +1,6 @@
 package backend.controller;
 
+import backend.dto.EventStatisticsDTO;
 import backend.entity.Event;
 import backend.entity.EventStatus;
 import backend.entity.User;
@@ -37,8 +38,36 @@ public class EventController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
-        Optional<Event> event = eventService.getEventById(id);
-        return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Event> optionalEvent = eventService.getEventById(id);
+
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+
+            // Increment the views field by 1
+            event.setViews(event.getViews() + 1);
+
+            // Save the updated event to the database
+            eventService.saveEvent(event); // Assuming you have a save method in your service
+
+            return ResponseEntity.ok(event);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/views")
+    public ResponseEntity<Event> getEventViewsById(@PathVariable Long id) {
+        Optional<Event> optionalEvent = eventService.getEventById(id);
+
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+
+            eventService.saveEvent(event); // Assuming you have a save method in your service
+
+            return ResponseEntity.ok(event);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/all/user")
@@ -111,6 +140,8 @@ public class EventController {
         event.setLink(link);
         event.setStatusEvent(EventStatus.NEW);
         event.setDate(LocalDate.now());
+        event.setViews(0L);
+
         eventService.saveEvent(event);
 
         return ResponseEntity.ok("Event created successfully!");
@@ -130,6 +161,11 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventsSortedByDate() {
         List<Event> events = eventService.getEventsSortedByDate();
         return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/sorted-by-popularity")
+    public List<Event> getEventsByPopularity() {
+        return eventService.getEventsByPopularity();
     }
 
     @PutMapping("/{id}/status")
@@ -167,6 +203,14 @@ public class EventController {
         eventService.saveEvent(event);
 
         return ResponseEntity.ok("Event updated successfully");
+    }
+
+    @GetMapping("/user/statistics")
+    public ResponseEntity<List<EventStatisticsDTO>> getUserEventStatistics(Authentication authentication) {
+        String username = authentication.getName();
+        Long userId = userService.findByUsername(username).getId();
+        List<EventStatisticsDTO> statistics = eventService.getUserEventStatistics(userId);
+        return ResponseEntity.ok(statistics);
     }
 
     @DeleteMapping("/{id}")

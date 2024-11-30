@@ -9,13 +9,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Transactional(readOnly = true)
     List<Event> findByCategory(String category);
-   // List<Event> findPopularEvents();
+
+    // List<Event> findPopularEvents();
 
     @Transactional(readOnly = true)
     @Query("SELECT e FROM Event e WHERE e.organizer.id = :organizerId")
@@ -23,5 +25,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Transactional(readOnly = true)
     List<Event> findAllByOrderByDateDesc();
+
+    @Transactional(readOnly = true)
+    Optional<Event> findById(Long id);
+
 
 }

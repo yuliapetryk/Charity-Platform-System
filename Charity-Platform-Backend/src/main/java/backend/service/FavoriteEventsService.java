@@ -48,4 +48,13 @@ public class FavoriteEventsService {
                 .map(FavoriteEvents::getEventId)
                 .collect(Collectors.toList());
     }
+
+    public long getFavoriteEventCount(Long eventId) {
+        return repository.countByEventId(eventId);
+    }
+
+    public long countByEventId(Long eventId){
+        return repository.countByEventId(eventId);
+
+    }
 }

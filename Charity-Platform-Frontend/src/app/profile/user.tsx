@@ -194,6 +194,15 @@ export function Profile() {
                 >
                   <CogIcon className="w-5 h-5" /> Переглянути мої улюблені події
                 </Button>
+
+                <Button
+                  variant="outlined"
+                  color="purple"
+                  onClick={() => router.push(`/statistics`)} // Redirect to the statistics page
+                  className="w-full flex items-center gap-2"
+                >
+                 <UserIcon className="w-5 h-5" /> Переглянути статистику
+                 </Button>
               </>
             ) : userInfo.role === "ADMIN" ? (
               <>

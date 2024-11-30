@@ -61,4 +61,9 @@ public class FavoriteEventsController {
 
         return ResponseEntity.ok(service.getEventIdsByUserId(userId));
     }
+
+    @GetMapping("/count/{eventId}")
+    public long getFavoriteEventCount(@PathVariable Long eventId) {
+        return service.getFavoriteEventCount(eventId);
+    }
 }
