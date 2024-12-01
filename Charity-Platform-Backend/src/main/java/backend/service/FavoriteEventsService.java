@@ -29,7 +29,6 @@ public class FavoriteEventsService {
     }
 
     public boolean deleteFavoriteEvent(Long userId, Long eventId) {
-
         boolean exists = repository.existsByUserIdAndEventId(userId, eventId);
         if (!exists) {
             return false;
@@ -40,8 +39,6 @@ public class FavoriteEventsService {
         return true;
     }
 
-
-    // Get all event IDs by user ID
     public List<Long> getEventIdsByUserId(Long userId) {
         return repository.findByUserId(userId)
                 .stream()
@@ -55,7 +52,6 @@ public class FavoriteEventsService {
 
     public long countByEventId(Long eventId){
         return repository.countByEventId(eventId);
-
     }
 
     public Long getTotalFavorites() {

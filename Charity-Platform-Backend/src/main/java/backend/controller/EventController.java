@@ -8,21 +8,17 @@ import backend.exception.ResourceNotFoundException;
 import backend.service.EventService;
 import backend.service.JwtService;
 import backend.service.UserService;
-import com.sun.jdi.request.EventRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,6 +31,12 @@ public class EventController {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
@@ -88,11 +90,6 @@ public class EventController {
 
         return eventService.getEventsByCategory(realCategory);
     }
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtService jwtService;
 
     @PostMapping
     public ResponseEntity<String> createEvent(
@@ -217,7 +214,6 @@ public class EventController {
         Long eventCount = eventService.getEventCountByCategory(realCategory);
         return ResponseEntity.ok(eventCount);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {

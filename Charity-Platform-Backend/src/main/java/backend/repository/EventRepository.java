@@ -17,8 +17,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Transactional(readOnly = true)
     List<Event> findByCategory(String category);
 
-    // List<Event> findPopularEvents();
-
     @Transactional(readOnly = true)
     @Query("SELECT e FROM Event e WHERE e.organizer.id = :organizerId")
     List<Event> findByOrganizerId(@Param("organizerId") Long organizerId);

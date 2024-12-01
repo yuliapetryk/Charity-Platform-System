@@ -4,25 +4,26 @@ import backend.dto.JwtAuthenticationResponse;
 import backend.dto.SignInRequest;
 import backend.dto.SignUpRequest;
 import backend.entity.User;
-import backend.entity.Role;
 import backend.entity.UserStatus;
-import backend.entity.UserType;
 import backend.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
     private final UserRepository userRepository;
+
     private final UserService userService;
+
     private final PasswordEncoder passwordEncoder;
+
     private final JwtService jwtService;
+
     private final AuthenticationManager authenticationManager;
 
     public JwtAuthenticationResponse signup(SignUpRequest request) {

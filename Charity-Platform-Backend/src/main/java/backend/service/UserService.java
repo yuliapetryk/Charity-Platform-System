@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
     private  final UserRepository userRepository;
 
     public UserDetailsService userDetailsService(){
@@ -46,7 +47,7 @@ public class UserService {
     }
 
     public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);  // Assuming you have this method in your UserRepository
+        return userRepository.findByEmail(email);
     }
 
     public User getUserInfo(Long userId) {
@@ -57,15 +58,12 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        // Update the user's information
         user.setFirstName(userProfileDTO.getFirstName());
         user.setLastName(userProfileDTO.getLastName());
         user.setEmail(userProfileDTO.getEmail());
 
-        // Save and return the updated user
         return userRepository.save(user);
     }
-
 
 
 }

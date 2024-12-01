@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -26,20 +25,23 @@ public class User implements UserDetails {
     private Long id;
 
     private String firstName;
+
     private String lastName;
 
     @Column(unique = true)
     private String email;
+
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserType type; // Enum: ORGANIZATION, INDIVIDUAL
+    private UserType type;
 
     private LocalDate registrationDate;
+
     private String profilePhoto;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus status; // Enum: ACTIVE, BLOCKED, LIMITED_ACCESS
+    private UserStatus status;
 
     @Enumerated(EnumType.STRING)
     Role role;
@@ -54,6 +56,7 @@ public class User implements UserDetails {
         this.profilePhoto = null;
         this.status = UserStatus.ACTIVE;
     }
+
     @Override
     public String toString() {
         return "User{" +
@@ -64,10 +67,6 @@ public class User implements UserDetails {
                 ", role='" + role + '\'' +
                 '}';
     }
-
-
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Application> applications; // User's event registrations
 
     @Override
     @JsonIgnore

@@ -19,7 +19,7 @@ public class Meeting {
 
     @ManyToOne
     @JoinColumn(name = "organizer_id")
-    private User organizer; // Organizer of the meeting
+    private User organizer;
 
     private Double totalAmountRequired;
     private Double amountCollected;
@@ -29,5 +29,5 @@ public class Meeting {
 
     private LocalDate creationDate;
 
-    private String paymentDetails; // e.g., PayPal, Bank details
+    private String paymentDetails;
 }

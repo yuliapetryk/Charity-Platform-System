@@ -1,15 +1,12 @@
 package backend.controller;
 
-import backend.entity.FavoriteEvents;
-import backend.entity.User;
-import backend.service.EventService;
 import backend.service.FavoriteEventsService;
 import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,8 @@ public class FavoriteEventsController {
 
     @Autowired
     private FavoriteEventsService service;
+
+    @Autowired
     private final UserService userService;
 
 
@@ -51,12 +50,9 @@ public class FavoriteEventsController {
         }
     }
 
-    // Get all event IDs by user ID
     @GetMapping()
     public ResponseEntity<List<Long>> getEventIdsByUserId(Authentication authentication) {
-
         String username = authentication.getName();
-
         Long userId = (userService.findByUsername(username).getId());
 
         return ResponseEntity.ok(service.getEventIdsByUserId(userId));

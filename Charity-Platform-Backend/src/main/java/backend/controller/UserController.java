@@ -6,21 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
 
     @GetMapping("/role")
     public ResponseEntity<String> getUserRole(Authentication authentication) {
-        // Authentication object contains the user's details from the JWT
         String username = authentication.getName();
-
-        // Fetch role from your User repository
         String role = String.valueOf(userService.findByUsername(username).getRole());
 
         return ResponseEntity.ok(role);
@@ -36,7 +33,6 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<User> getUserInfo(Authentication authentication) {
-
         String username = authentication.getName();
         User user = (userService.findByUsername(username));
 
@@ -46,11 +42,11 @@ public class UserController {
     @PutMapping("/user")
     public ResponseEntity<User> updateUserProfile(Authentication currentUser,
                                                   @RequestBody User userProfileDTO) {
-
         String username = currentUser.getName();
         User user = (userService.findByUsername(username));
 
         User updatedUser = userService.updateUserProfile(user.getId(), userProfileDTO);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
 }

@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface EventScoreRepository extends JpaRepository<EventScore, Long> {
     List<EventScore> findByEventId(Long eventId);
-
     boolean existsByUserIdAndEventId(Long userId, Long eventId);
 
 }
