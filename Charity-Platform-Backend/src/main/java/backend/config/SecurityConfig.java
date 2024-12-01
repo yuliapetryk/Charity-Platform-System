@@ -55,9 +55,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/signup", "/api/signin").permitAll()
-                        .requestMatchers(HttpMethod.GET,  "/api/events/all", "/api/events/{id}", "/api/events/category/{category}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/signup", "/api/signin", "/api/emails").permitAll()
+                        .requestMatchers(HttpMethod.GET,  "/api/events/all", "/api/events/{id}", "/api/events/category/{category}", "api/events/user/statistics","api/{eventId}/average-score").permitAll()
                         .requestMatchers("/api/favorites/**").permitAll()
+
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
