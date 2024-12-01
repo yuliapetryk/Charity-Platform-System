@@ -29,5 +29,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Transactional(readOnly = true)
     Optional<Event> findById(Long id);
 
+    @Query("SELECT COALESCE(SUM(e.views), 0) FROM Event e")
+    Long getTotalViews();
+
+    Long countByCategory(String category);
 
 }

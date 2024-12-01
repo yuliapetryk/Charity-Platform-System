@@ -42,12 +42,8 @@ public class EventController {
 
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();
-
-            // Increment the views field by 1
             event.setViews(event.getViews() + 1);
-
-            // Save the updated event to the database
-            eventService.saveEvent(event); // Assuming you have a save method in your service
+            eventService.saveEvent(event);
 
             return ResponseEntity.ok(event);
         } else {
@@ -62,7 +58,7 @@ public class EventController {
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();
 
-            eventService.saveEvent(event); // Assuming you have a save method in your service
+            eventService.saveEvent(event);
 
             return ResponseEntity.ok(event);
         } else {
@@ -88,13 +84,12 @@ public class EventController {
             default -> "Соціальна допомога";
         };
 
-        // Log the resolved category
         logger.info("Resolved category: {}", realCategory);
 
         return eventService.getEventsByCategory(realCategory);
     }
     @Autowired
-    private UserService userService;  // Service to fetch User from the database
+    private UserService userService;
 
     @Autowired
     private JwtService jwtService;
@@ -109,14 +104,9 @@ public class EventController {
             @RequestParam("link") String link,
             @RequestParam("image") MultipartFile image) {
 
-        // Extract the token from the Authorization header
         String token = authorizationHeader.startsWith("Bearer ") ?
                 authorizationHeader.substring(7) : authorizationHeader;
-
-        // Extract email from the token
         String email = jwtService.extractUserName(token);
-
-        // Retrieve the organizer (user) from the database using the extracted email
         User organizer = userService.getUserByEmail(email).orElseThrow(null);
 
         if (organizer == null) {
@@ -146,11 +136,6 @@ public class EventController {
 
         return ResponseEntity.ok("Event created successfully!");
     }
-
-//    @GetMapping("/popular")
-//    public List<Event> getPopularEvents() {
-//        return eventService.getPopularEvents();
-//    }
 
     @GetMapping("/all")
     public List<Event> getAllEvents() {
@@ -213,6 +198,25 @@ public class EventController {
         return ResponseEntity.ok(statistics);
     }
 
+    @GetMapping("/total-views")
+    public ResponseEntity<Long> getTotalEventViews() {
+        Long totalViews = eventService.getTotalEventViews();
+        return ResponseEntity.ok(totalViews);
+    }
+
+    @GetMapping("/count-by-category/{category}")
+    public ResponseEntity<Long> getEventCountByCategory(@PathVariable String category) {
+        String realCategory = switch (category) {
+            case "health" -> "Здоров'я";
+            case "social" -> "Соціальна допомога";
+            case "ecology" -> "Екологія та тварини";
+            case "education" -> "Освіта та наука";
+            case "sport" -> "Культура і спорт";
+            default -> "Соціальна допомога";
+        };
+        Long eventCount = eventService.getEventCountByCategory(realCategory);
+        return ResponseEntity.ok(eventCount);
+    }
 
 
     @DeleteMapping("/{id}")

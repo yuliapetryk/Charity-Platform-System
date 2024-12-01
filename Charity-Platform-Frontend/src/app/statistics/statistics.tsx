@@ -9,7 +9,7 @@ interface EventStatistics {
   date: string;
   views: number;
   favoritesCount: number;
-  score : number;
+  score: number;
 }
 
 export default function Statistics() {
@@ -18,6 +18,7 @@ export default function Statistics() {
 
   const [statistics, setStatistics] = useState<EventStatistics[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [totalFavorites, setTotalFavorites] = useState<number>(0);
 
   useEffect(() => {
     if (!token) {
@@ -27,7 +28,8 @@ export default function Statistics() {
 
     const fetchStatistics = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/events/user/statistics", {
+        // Fetch user's event statistics
+        const statsResponse = await fetch("http://localhost:8080/api/events/user/statistics", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -35,11 +37,23 @@ export default function Statistics() {
           },
         });
 
-        if (!response.ok) throw new Error("Failed to fetch statistics");
+        if (!statsResponse.ok) throw new Error("Failed to fetch event statistics");
 
-        const data = await response.json();
-        console.log("Statistics:", data)
-        setStatistics(data);
+        const statsData = await statsResponse.json();
+        setStatistics(statsData);
+
+        // Fetch total count of user's favorite events
+        const favoritesResponse = await fetch(`http://localhost:8080/api/favorite/count-by-user/${token}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!favoritesResponse.ok) throw new Error("Failed to fetch favorite events count");
+
+        const favoritesData = await favoritesResponse.json();
+        setTotalFavorites(favoritesData);
       } catch (error) {
         console.error(error);
       } finally {
@@ -61,19 +75,38 @@ export default function Statistics() {
         Статистика ваших подій
       </Typography>
       <Card className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
-        {/* Summary Section */}
-        <div className="mb-6">
-          <Typography color="blue-gray" className="text-xl font-semibold text-center">
-            Загальна кількість переглядів: <span className="font-bold">{totalViews}</span>
-          </Typography>
+        {/* Overall Statistics Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {/* Total Views */}
+          <div className="bg-blue-500 text-white text-center py-6 rounded-lg shadow-md">
+            <Typography variant="h6" className="font-semibold">
+              Загальна кількість переглядів
+            </Typography>
+            <Typography variant="h3" className="font-bold mt-2">
+              {totalViews}
+            </Typography>
+          </div>
+
+          {/* Total Favorites */}
+          <div className="bg-green-500 text-white text-center py-6 rounded-lg shadow-md">
+            <Typography variant="h6" className="font-semibold">
+              Загальна кількість доданих в обране
+            </Typography>
+            <Typography variant="h3" className="font-bold mt-2">
+              {totalFavorites}
+            </Typography>
+          </div>
         </div>
 
         {/* Statistics Table */}
+        <Typography color="blue-gray" className="text-xl font-bold mb-4">
+          Статистика окремих подій
+        </Typography>
         {statistics.length > 0 ? (
           <TableContainer component={Paper} className="shadow-lg rounded-lg">
             <Table>
               <TableHead>
-                <TableRow className="bg-blue-500 text-white">
+                <TableRow className="bg-purple-500 text-white"> {/* Changed to purple */}
                   <TableCell className="font-bold">Назва</TableCell>
                   <TableCell className="font-bold">Дата</TableCell>
                   <TableCell className="font-bold">Перегляди</TableCell>

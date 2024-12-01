@@ -57,4 +57,12 @@ public class FavoriteEventsService {
         return repository.countByEventId(eventId);
 
     }
+
+    public Long getTotalFavorites() {
+        return repository.countAllFavorites();
+    }
+
+    public Long countByUserId(Long userId) {
+        return repository.countByUserId(userId);
+    }
 }

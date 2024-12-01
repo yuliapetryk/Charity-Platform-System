@@ -108,8 +108,16 @@ public class EventService {
         }).collect(Collectors.toList());
     }
 
+    public Long getTotalEventViews() {
+        return eventRepository.getTotalViews();
+    }
+
+    public Long getEventCountByCategory(String category) {
+        return eventRepository.countByCategory(category);
+    }
 
     public void deleteEventById(Long id) {
         eventRepository.deleteById(id);
     }
+
 }
