@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -73,5 +74,13 @@ public class FavoriteEventsController {
     public ResponseEntity<Long> getCountByUserId(@PathVariable Long userId) {
         Long count = service.countByUserId(userId);
         return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/favorite-categories")
+    public ResponseEntity<Map<String, Long>> getFavoriteCategoriesByUser(Authentication authentication) {
+        String username = authentication.getName();
+        Long userId = (userService.findByUsername(username).getId());
+        Map<String, Long> favoriteCategories = service.getFavoriteCategoriesByUser(userId);
+        return ResponseEntity.ok(favoriteCategories);
     }
 }
