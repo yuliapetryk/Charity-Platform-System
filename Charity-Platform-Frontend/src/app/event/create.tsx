@@ -10,8 +10,6 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { useSelector, useDispatch } from "react-redux";
-import {setter} from '../tokenSlice'
-import { useRouter } from "next/navigation";
 
 interface RootState {
   token: {
@@ -37,12 +35,12 @@ export default function CreateEvent() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     if (!name || !description || !shortDescription || !category || !image || !link) {
       alert("Please fill in all fields.");
       return;
     }
-  
+
     const formPayload = new FormData();
     formPayload.append("name", name);
     formPayload.append("description", description);
@@ -50,19 +48,18 @@ export default function CreateEvent() {
     formPayload.append("category", category);
     formPayload.append("link", link);
     formPayload.append("image", image);
-  
+
     try {
       console.log("Token:", token);
-  
-      // Do not set Content-Type here
+
       const response = await fetch("http://localhost:8080/api/events", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`, // Send token in Authorization header
+          Authorization: `Bearer ${token}`,
         },
-        body: formPayload, // FormData will set the appropriate content type
+        body: formPayload,
       });
-  
+
       if (response.ok) {
         console.log("Event created successfully!");
         setName("");
@@ -79,7 +76,7 @@ export default function CreateEvent() {
       console.log("An error occurred. Please try again.");
     }
   };
-  
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -99,7 +96,6 @@ export default function CreateEvent() {
           </Typography>
         </header>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          {/* Name Field */}
           <div>
             <Input
               label="Назва акції"
@@ -110,28 +106,26 @@ export default function CreateEvent() {
             />
           </div>
 
-        {/* Description Field */}
           <div>
             <Textarea
               label="Короткий опис акції"
               value={shortDescription}
               onChange={(e) => setShortDescription(e.target.value)}
-              maxLength={250} 
-              minLength={50} 
+              maxLength={250}
+              minLength={50}
               size="lg"
               required
             />
           </div>
 
-          {/* Description Field */}
           <div>
             <Textarea
               label="Опис акції"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               size="lg"
-              maxLength={1500} 
-              minLength={50} 
+              maxLength={1500}
+              minLength={50}
               className="w-full overflow-hidden resize-none"
               required
             />
@@ -145,22 +139,20 @@ export default function CreateEvent() {
               label="Посилання на збір"
               value={link}
               onChange={(e) => setLink(e.target.value)}
-              maxLength={100} 
-              minLength={5} 
+              maxLength={100}
+              minLength={5}
               size="lg"
               required
             />
           </div>
 
-
-          {/* Category Dropdown */}
           <div>
             <Select
               label="Категорія"
               value={category}
               onChange={(value) => setCategory(value || "")}
               size="lg"
-              
+
             >
               {categories.map((cat) => (
                 <Option key={cat} value={cat}>
@@ -170,7 +162,6 @@ export default function CreateEvent() {
             </Select>
           </div>
 
-          {/* Image Upload */}
           <div>
             <Input
               type="file"
@@ -182,7 +173,6 @@ export default function CreateEvent() {
             />
           </div>
 
-          {/* Submit Button */}
           <Button
             type="submit"
             fullWidth

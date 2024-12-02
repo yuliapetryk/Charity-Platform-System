@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";import type { Metadata } from "next";
+import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 
 interface BlogPostCardProps {
-  id: string; // Unique ID for the post
+  id: string;
   img: string;
   tag: string;
   title: string;
@@ -31,7 +31,7 @@ export function BlogPostCard({
   const router = useRouter();
 
   const handleTitleClick = () => {
-    router.push(`/posts/${id}`); // Redirects to a dynamic route based on the post ID
+    router.push(`/posts/${id}`);
   };
 
   return (
@@ -46,12 +46,10 @@ export function BlogPostCard({
         />
       </CardHeader>
       <CardBody className="p-6">
-        {/* Tag display */}
         <Typography variant="small" color="blue" className="mb-2 !font-medium">
           {tag}
         </Typography>
 
-        {/* Title with click handler */}
         <Typography
           as="div"
           onClick={handleTitleClick}
@@ -62,12 +60,10 @@ export function BlogPostCard({
           {title}
         </Typography>
 
-        {/* Description */}
         <Typography className="mb-6 font-normal !text-gray-500">
           {desc}
         </Typography>
 
-        {/* Author and Date info */}
         <div className="flex items-center gap-4">
           <div>
             <Typography

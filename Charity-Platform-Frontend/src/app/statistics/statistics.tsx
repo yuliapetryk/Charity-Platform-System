@@ -13,7 +13,7 @@ interface EventStatistics {
 }
 
 export default function Statistics() {
-  const token = useSelector((state: any) => state.token.value); // Get token from Redux store
+  const token = useSelector((state: any) => state.token.value);
   const router = useRouter();
 
   const [statistics, setStatistics] = useState<EventStatistics[]>([]);
@@ -28,7 +28,6 @@ export default function Statistics() {
 
     const fetchStatistics = async () => {
       try {
-        // Fetch user's event statistics
         const statsResponse = await fetch("http://localhost:8080/api/events/user/statistics", {
           method: "GET",
           headers: {
@@ -42,7 +41,6 @@ export default function Statistics() {
         const statsData = await statsResponse.json();
         setStatistics(statsData);
 
-        // Fetch total count of user's favorite events
         const favoritesResponse = await fetch(`http://localhost:8080/api/favorite/count-by-user/${token}`, {
           method: "GET",
           headers: {
@@ -66,7 +64,6 @@ export default function Statistics() {
 
   if (loading) return <div className="text-center">Loading...</div>;
 
-  // Calculate the total views for all user's events
   const totalViews = statistics.reduce((sum, event) => sum + event.views, 0);
 
   return (
@@ -75,9 +72,7 @@ export default function Statistics() {
         Статистика ваших подій
       </Typography>
       <Card className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
-        {/* Overall Statistics Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          {/* Total Views */}
           <div className="bg-blue-500 text-white text-center py-6 rounded-lg shadow-md">
             <Typography variant="h6" className="font-semibold">
               Загальна кількість переглядів
@@ -87,7 +82,6 @@ export default function Statistics() {
             </Typography>
           </div>
 
-          {/* Total Favorites */}
           <div className="bg-green-500 text-white text-center py-6 rounded-lg shadow-md">
             <Typography variant="h6" className="font-semibold">
               Загальна кількість доданих в обране
@@ -98,7 +92,6 @@ export default function Statistics() {
           </div>
         </div>
 
-        {/* Statistics Table */}
         <Typography color="blue-gray" className="text-xl font-bold mb-4">
           Статистика окремих подій
         </Typography>
@@ -106,7 +99,7 @@ export default function Statistics() {
           <TableContainer component={Paper} className="shadow-lg rounded-lg">
             <Table>
               <TableHead>
-                <TableRow className="bg-purple-500 text-white"> {/* Changed to purple */}
+                <TableRow className="bg-purple-500 text-white">
                   <TableCell className="font-bold">Назва</TableCell>
                   <TableCell className="font-bold">Дата</TableCell>
                   <TableCell className="font-bold">Перегляди</TableCell>

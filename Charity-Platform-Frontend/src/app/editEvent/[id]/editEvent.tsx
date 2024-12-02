@@ -70,34 +70,34 @@ const EditEvent = ({ id }: { id: any }) => {
           e.preventDefault();
           handleSubmit();
         }}
-        className="flex flex-col gap-10" // Increase gap between fields
+        className="flex flex-col gap-10"
       >
         <Input
           label="Назва Події"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required // Mark as required
-          className="mb-6 text-lg py-3" // Larger input
+          required
+          className="mb-6 text-lg py-3"
         />
         <Input
           label="Категорія"
           value={formData.category}
           onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-          required // Mark as required
+          required
           className="mb-6 text-lg py-3"
         />
         <Textarea
           label="Опис"
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          required // Mark as required
+          required
           className="mb-6 text- py-5"
         />
         <Input
           label="Посилання"
           value={formData.link}
           onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-          required // Mark as required
+          required
           className="mb-6 text-lg py-3"
         />
         <Button type="submit" color="green" className="mt-6 text-lg py-3">

@@ -2,10 +2,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Typography,
-  Tabs,
-  TabsHeader,
-  Tab,
   Input,
 } from "@material-tailwind/react";
 import { ArrowSmallDownIcon } from "@heroicons/react/24/solid";
@@ -14,9 +10,9 @@ import { useSelector } from "react-redux";
 
 export function Posts() {
   const [events, setEvents] = useState<any[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<any[]>([]); // To store filtered events
-  const [searchTerm, setSearchTerm] = useState<string>(""); // To store search input
-  const token = useSelector((state: any) => state.token.value); // Access token from Redux store
+  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const token = useSelector((state: any) => state.token.value);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -24,7 +20,7 @@ export function Posts() {
         const response = await fetch("http://localhost:8080/api/events/all");
         const data = await response.json();
         setEvents(data);
-        setFilteredEvents(data); // Initialize filteredEvents with all events
+        setFilteredEvents(data);
         console.log("DATA:", data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -34,7 +30,6 @@ export function Posts() {
     fetchEvents();
   }, []);
 
-  // Update filtered events whenever the search term changes
   useEffect(() => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
     const filtered = events.filter((event) =>
@@ -45,7 +40,6 @@ export function Posts() {
 
   return (
     <section className="grid min-h-screen place-items-center p-8">
-      {/* Search Field */}
       <div className="mb-8 w-full max-w-md">
         <Input
           type="text"
@@ -56,14 +50,13 @@ export function Posts() {
         />
       </div>
 
-      {/* Events Grid */}
       <div className="container my-auto grid grid-cols-1 gap-x-8 gap-y-16 items-start lg:grid-cols-3">
         {filteredEvents.map(
           ({ id, image, category, name, shortDescription, date, organizer }) => (
             <BlogPostCard
               id={id}
               key={id}
-              img={`data:image/jpeg;base64,${image}`} // Pass the base64 string to BlogPostCard
+              img={`data:image/jpeg;base64,${image}`}
               tag={category}
               title={name}
               desc={shortDescription}
@@ -74,7 +67,6 @@ export function Posts() {
         )}
       </div>
 
-      {/* View More Button */}
       <Button
         variant="text"
         size="lg"
@@ -82,7 +74,7 @@ export function Posts() {
         className="flex items-center gap-2 mt-24"
       >
         <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-       Більше
+        Більше
       </Button>
     </section>
   );

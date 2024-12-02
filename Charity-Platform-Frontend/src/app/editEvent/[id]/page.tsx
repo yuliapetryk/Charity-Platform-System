@@ -1,12 +1,12 @@
-"use client"; // Enables client-side rendering
+"use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import {  Footer } from "@/components";
+import { Footer } from "@/components";
 import { Navbar } from "@/components"
 import EditEvent from "./editEvent";
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import store from '../../store'
-import { useParams } from "next/navigation"; 
+import { useParams } from "next/navigation";
 
 export default function Campaign() {
     const router = useRouter();
@@ -14,12 +14,12 @@ export default function Campaign() {
 
     return (
         <Provider store={store}>
-        <>
-            <title>Open Hearts</title>
-            <Navbar />
-            <EditEvent id={id} />
-            <Footer />
-        </>
+            <>
+                <title>Open Hearts</title>
+                <Navbar />
+                <EditEvent id={id} />
+                <Footer />
+            </>
         </Provider>
     );
 }

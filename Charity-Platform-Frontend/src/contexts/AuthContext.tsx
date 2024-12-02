@@ -11,14 +11,13 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   token: null,
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
 
-  // Use useEffect to load the token from localStorage on initial render
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
     if (storedToken) {
@@ -28,12 +27,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = (newToken: string) => {
     setToken(newToken);
-    localStorage.setItem("authToken", newToken); // Save to localStorage
+    localStorage.setItem("authToken", newToken);
   };
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem("authToken"); // Remove from localStorage
+    localStorage.removeItem("authToken");
   };
 
   return (

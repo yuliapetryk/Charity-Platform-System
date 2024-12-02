@@ -1,4 +1,3 @@
-// redux/tokenSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TokenState {
@@ -11,22 +10,21 @@ const initialState: TokenState = {
   isAuthenticated: false,
 };
 
-// Create the token slice with additional actions
 export const tokenSlice = createSlice({
   name: 'token',
-  initialState ,
+  initialState,
   reducers: {
     setter: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
       state.isAuthenticated = true;
       console.log('Updated state of token to:', state.value);
-      localStorage.setItem('authToken', action.payload); // Save token to localStorage
+      localStorage.setItem('authToken', action.payload);
     },
     logout: (state) => {
       state.value = '';
       state.isAuthenticated = false;
       console.log('Logged out');
-      localStorage.removeItem('authToken'); // Remove token from localStorage
+      localStorage.removeItem('authToken');
     },
     restoreToken: (state) => {
       const token = localStorage.getItem('authToken');

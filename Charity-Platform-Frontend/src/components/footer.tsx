@@ -13,40 +13,40 @@ export function Footer() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleSubscribe = async () => {
-   
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email validation regex
-    
-      if (!email) {
-        setSuccessMessage("Будь ласка, введіть вашу електронну адресу.");
-        return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      setSuccessMessage("Будь ласка, введіть вашу електронну адресу.");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setSuccessMessage("Будь ласка, введіть дійсну електронну адресу.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/api/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Не вдалося підписатися. Будь ласка, спробуйте пізніше.");
       }
-    
-      if (!emailRegex.test(email)) {
-        setSuccessMessage("Будь ласка, введіть дійсну електронну адресу.");
-        return;
-      }
-    
-      try {
-        const response = await fetch("http://localhost:8080/api/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
-    
-        if (!response.ok) {
-          throw new Error("Не вдалося підписатися. Будь ласка, спробуйте пізніше.");
-        }
-    
-        setEmail(""); // Clear the input field
-        setSuccessMessage("Дякуємо, що приєднались до нас!");
-      } catch (error) {
-        console.error(error);
-        setSuccessMessage("Упс, щось пішло не так. Спробуйте ще раз.");
-      }
-    };
-    
+
+      setEmail("");
+      setSuccessMessage("Дякуємо, що приєднались до нас!");
+    } catch (error) {
+      console.error(error);
+      setSuccessMessage("Упс, щось пішло не так. Спробуйте ще раз.");
+    }
+  };
+
 
   return (
     <footer className="pb-5 p-10 md:pt-10">
@@ -67,7 +67,6 @@ export function Footer() {
           </Typography>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 md:flex-row">
             <div className="w-80">
-              {/* Email Input */}
               <Input
                 label="Електронна адреса"
                 color="white"

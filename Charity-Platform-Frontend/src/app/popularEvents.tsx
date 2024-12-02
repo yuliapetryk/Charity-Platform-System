@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Typography,
-  Tabs,
 } from "@material-tailwind/react";
 import { ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import BlogPostCard from "@/app/blog-post-card";
@@ -11,10 +10,10 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 export function PostsPopular() {
-  const [events, setEvents] = useState<any[]>([]); // All events fetched from API
-  const [visibleEvents, setVisibleEvents] = useState<any[]>([]); // Events currently visible
-  const [itemsToShow, setItemsToShow] = useState(3); // Number of events to show initially
-  const token = useSelector((state: any) => state.token.value); // Access token from Redux store
+  const [events, setEvents] = useState<any[]>([]); 
+  const [visibleEvents, setVisibleEvents] = useState<any[]>([]); 
+  const [itemsToShow, setItemsToShow] = useState(3); 
+  const token = useSelector((state: any) => state.token.value); 
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -23,7 +22,7 @@ export function PostsPopular() {
         const data = await response.json();
         const confirmedEvents = data.filter((event: any) => event.statusEvent === "CONFIRMED");
         
-        setEvents(confirmedEvents); // Store only confirmed events
+        setEvents(confirmedEvents); 
         setVisibleEvents(confirmedEvents.slice(0, itemsToShow));
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -31,7 +30,7 @@ export function PostsPopular() {
     };
 
     fetchEvents();
-  }, [itemsToShow]); // Re-fetch visible events when `itemsToShow` changes
+  }, [itemsToShow]); 
 
   const router = useRouter();
 
@@ -41,7 +40,7 @@ export function PostsPopular() {
   };
 
   const handleViewMore = () => {
-    setItemsToShow((prev) => prev + 6); // Increase the number of visible events by 6
+    setItemsToShow((prev) => prev + 6); 
   };
 
   return (
@@ -51,13 +50,12 @@ export function PostsPopular() {
             Популярні проєкти
       </Typography>
 
-      {/* Display the visible events */}
       <div className="container my-auto grid grid-cols-1 gap-x-8 gap-y-16 items-start lg:grid-cols-3">
         {visibleEvents.map(({ id, image, category, name, shortDescription, date, organizer }) => (
           <BlogPostCard
             id={id}
             key={name}
-            img={`data:image/jpeg;base64,${image}`} // Pass the base64 string to BlogPostCard
+            img={`data:image/jpeg;base64,${image}`} 
             tag={category}
             title={name}
             desc={shortDescription}
@@ -67,17 +65,15 @@ export function PostsPopular() {
         ))}
       </div>
 
-      {/* VIEW MORE Button */}
       {visibleEvents.length < events.length && (
         <Button
           variant="text"
           size="lg"
           color="gray"
           className="flex items-center gap-2 mt-24"
-          onClick={handleViewMore}
-        >
+          onClick={handleViewMore}>
           <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-          VIEW MORE
+          Більше
         </Button>
       )}
     </section>

@@ -1,4 +1,4 @@
-"use client"; // Enables client-side rendering
+"use client"; 
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Navbar, Footer } from "@/components";
@@ -12,7 +12,6 @@ export default function Campaign() {
 
     return (
         <Provider store={store}>
-
         <>
             <title>Open Hearts</title>
             <Navbar />

@@ -4,8 +4,6 @@ import {
   Button,
   Typography,
   Tabs,
-  TabsHeader,
-  Tab,
 } from "@material-tailwind/react";
 import { ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import BlogPostCard from "@/app/blog-post-card";
@@ -14,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 export function Posts() {
   const [events, setEvents] = useState<any[]>([]);
-  const  token  = useSelector((state: any) => state.token.value); // Access token from Redux store
+  const token = useSelector((state: any) => state.token.value);
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -33,123 +31,116 @@ export function Posts() {
   const router = useRouter();
 
   const handleCategoryClick = (category: string) => {
-    // Navigate to the events page with the selected category as a query parameter
     router.push(`/allEventsCategory?category=${encodeURIComponent(category)}`);
   };
 
   return (
     <section className="grid min-h-screen place-items-center p-8">
-     <Tabs value="trends" className="mx-auto max-w-7xl w-full mb-16">
-  <div className="w-full flex mb-8 flex-wrap justify-between gap-6">
-    {/* Button for Здоров'я */}
-    <div className="flex flex-col items-center">
-      <button
-        className="w-20 h-20 rounded-full bg-blue-500 text-white flex justify-center items-center"
-        onClick={() => handleCategoryClick("health")}
-      >
-        <img src="/image/health.png" alt="Здоров'я" className="w-20 h-20" />
-      </button>
-      <span>
-        <Typography
-          variant="h6"
-          className="mt-2 text-lg font-bold text-blue-700 uppercase"
-        >
-          Здоров'я
-        </Typography>
-      </span>
-    </div>
+      <Tabs value="trends" className="mx-auto max-w-7xl w-full mb-16">
+        <div className="w-full flex mb-8 flex-wrap justify-between gap-6">
+          <div className="flex flex-col items-center">
+            <button
+              className="w-20 h-20 rounded-full bg-blue-500 text-white flex justify-center items-center"
+              onClick={() => handleCategoryClick("health")}
+            >
+              <img src="/image/health.png" alt="Здоров'я" className="w-20 h-20" />
+            </button>
+            <span>
+              <Typography
+                variant="h6"
+                className="mt-2 text-lg font-bold text-blue-700 uppercase"
+              >
+                Здоров'я
+              </Typography>
+            </span>
+          </div>
 
-    {/* Button for Соціальна допомога */}
-    <div className="flex flex-col items-center">
-      <button
-        className="w-20 h-20 rounded-full bg-yellow-400 text-white flex justify-center items-center"
-        onClick={() => handleCategoryClick("social")}
-      >
-        <img src="/image/heart.png" alt="Соціальна допомога" className="w-20 h-20" />
-      </button>
-      <span>
-        <Typography
-          variant="h6"
-          className="mt-2 text-lg font-bold text-yellow-700 uppercase"
-        >
-          Соціальна допомога
-        </Typography>
-      </span>
-    </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-20 h-20 rounded-full bg-yellow-400 text-white flex justify-center items-center"
+              onClick={() => handleCategoryClick("social")}
+            >
+              <img src="/image/heart.png" alt="Соціальна допомога" className="w-20 h-20" />
+            </button>
+            <span>
+              <Typography
+                variant="h6"
+                className="mt-2 text-lg font-bold text-yellow-700 uppercase"
+              >
+                Соціальна допомога
+              </Typography>
+            </span>
+          </div>
 
-    {/* Button for Екологія та тварини */}
-    <div className="flex flex-col items-center">
-      <button
-        className="w-20 h-20 rounded-full bg-green-500 text-white flex justify-center items-center"
-        onClick={() => handleCategoryClick("ecology")}
-      >
-        <img src="/image/ecology.png" alt="Екологія та тварини" className="w-20 h-20" />
-      </button>
-      <span>
-        <Typography
-          variant="h6"
-          className="mt-2 text-lg font-bold text-green-700 uppercase"
-        >
-          Екологія та тварини
-        </Typography>
-      </span>
-    </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-20 h-20 rounded-full bg-green-500 text-white flex justify-center items-center"
+              onClick={() => handleCategoryClick("ecology")}
+            >
+              <img src="/image/ecology.png" alt="Екологія та тварини" className="w-20 h-20" />
+            </button>
+            <span>
+              <Typography
+                variant="h6"
+                className="mt-2 text-lg font-bold text-green-700 uppercase"
+              >
+                Екологія та тварини
+              </Typography>
+            </span>
+          </div>
 
-    {/* Button for Освіта та наука */}
-    <div className="flex flex-col items-center">
-      <button
-        className="w-20 h-20 rounded-full bg-orange-500 text-white flex justify-center items-center"
-        onClick={() => handleCategoryClick("education")}
-      >
-        <img src="/image/world.png" alt="Освіта та наука" className="w-20 h-20" />
-      </button>
-      <span>
-        <Typography
-          variant="h6"
-          className="mt-2 text-lg font-bold text-orange-700 uppercase"
-        >
-          Освіта та наука
-        </Typography>
-      </span>
-    </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-20 h-20 rounded-full bg-orange-500 text-white flex justify-center items-center"
+              onClick={() => handleCategoryClick("education")}
+            >
+              <img src="/image/world.png" alt="Освіта та наука" className="w-20 h-20" />
+            </button>
+            <span>
+              <Typography
+                variant="h6"
+                className="mt-2 text-lg font-bold text-orange-700 uppercase"
+              >
+                Освіта та наука
+              </Typography>
+            </span>
+          </div>
 
-    {/* Button for Культура і спорт */}
-    <div className="flex flex-col items-center">
-      <button
-        className="w-20 h-20 rounded-full bg-pink-500 text-white flex justify-center items-center"
-        onClick={() => handleCategoryClick("sport")}
-      >
-        <img src="/image/art.png" alt="Культура і спорт" className="w-20 h-20" />
-      </button>
-      <span>
-        <Typography
-          variant="h6"
-          className="mt-2 text-lg font-bold text-pink-700 uppercase"
-        >
-          Культура і спорт
-        </Typography>
-      </span>
-    </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-20 h-20 rounded-full bg-pink-500 text-white flex justify-center items-center"
+              onClick={() => handleCategoryClick("sport")}
+            >
+              <img src="/image/art.png" alt="Культура і спорт" className="w-20 h-20" />
+            </button>
+            <span>
+              <Typography
+                variant="h6"
+                className="mt-2 text-lg font-bold text-pink-700 uppercase"
+              >
+                Культура і спорт
+              </Typography>
+            </span>
+          </div>
 
-    {/* Button for Усі категорії */}
-    <div className="flex flex-col items-center">
-      <button
-        className="w-20 h-20 rounded-full bg-purple-600 text-white flex justify-center items-center"
-        onClick={() => router.push(`/allEvents`)}
-      >
-        <img src="/image/others.png" alt="Усі категорії" className="w-20 h-20" />
-      </button>
-      <span>
-        <Typography
-          variant="h6"
-          className="mt-2 text-lg font-bold text-purple-700 uppercase"
-        >
-          Усі категорії
-        </Typography>
-      </span>
-    </div>
-  </div>
-</Tabs>
+          <div className="flex flex-col items-center">
+            <button
+              className="w-20 h-20 rounded-full bg-purple-600 text-white flex justify-center items-center"
+              onClick={() => router.push(`/allEvents`)}
+            >
+              <img src="/image/others.png" alt="Усі категорії" className="w-20 h-20" />
+            </button>
+            <span>
+              <Typography
+                variant="h6"
+                className="mt-2 text-lg font-bold text-purple-700 uppercase"
+              >
+                Усі категорії
+              </Typography>
+            </span>
+          </div>
+        </div>
+      </Tabs>
 
       <Typography variant="h1" className="mb-2">
         Проєкти
@@ -167,15 +158,15 @@ export function Posts() {
       <div className="container my-auto grid grid-cols-1 gap-x-8 gap-y-16 items-start lg:grid-cols-3">
         {events.map(({ id, image, category, name, shortDescription, date, organizer }) => (
           <BlogPostCard
-          
+
             id={id}
             key={name}
-            img={`data:image/jpeg;base64,${image}`} // Pass the base64 string to BlogPostCard
+            img={`data:image/jpeg;base64,${image}`}
             tag={category}
             title={name}
             desc={shortDescription}
             date={date}
-            author={organizer.firstName +" " + organizer.lastName}
+            author={organizer.firstName + " " + organizer.lastName}
           />
         ))}
       </div>
@@ -186,7 +177,7 @@ export function Posts() {
         className="flex items-center gap-2 mt-24"
       >
         <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-        VIEW MORE
+        Більше
       </Button>
     </section>
   );

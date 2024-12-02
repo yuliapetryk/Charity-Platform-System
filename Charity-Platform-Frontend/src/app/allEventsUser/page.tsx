@@ -1,10 +1,9 @@
 "use client"
 
-import { useParams } from "next/navigation"; // Use for dynamic params
 import { Navbar, Footer } from "@/components";
-import EventDetail from "./usersEvent"; // Adjust the path based on your project structure
+import EventDetail from "./usersEvent";
 import { Provider } from "react-redux";
-import store from "../store"; // Adjust the store path as needed
+import store from "../store";
 
 const EventPage = () => {
 

@@ -11,20 +11,20 @@ import { useSelector } from "react-redux";
 
 export function Posts() {
   const [events, setEvents] = useState<any[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<any[]>([]); // To store filtered events
-  const [searchTerm, setSearchTerm] = useState<string>(""); // To store search input
-  const [showNewEventsOnly, setShowNewEventsOnly] = useState<boolean>(false); // State to track filter toggle
-  const token = useSelector((state: any) => state.token.value); // Access token from Redux store
+  const [filteredEvents, setFilteredEvents] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [showNewEventsOnly, setShowNewEventsOnly] = useState<boolean>(false);
+  const token = useSelector((state: any) => state.token.value);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/events/all", {
-          headers: { Authorization: `Bearer ${token}` }, // Include token in the request
+          headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
         setEvents(data);
-        setFilteredEvents(data); // Initialize filteredEvents with all events
+        setFilteredEvents(data);
         console.log("DATA:", data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -34,7 +34,6 @@ export function Posts() {
     fetchEvents();
   }, [token]);
 
-  // Update filtered events whenever the search term changes
   useEffect(() => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
     const filtered = events.filter((event) =>
@@ -43,14 +42,12 @@ export function Posts() {
     setFilteredEvents(filtered);
   }, [searchTerm, events]);
 
-  // Filter events to show only NEW status
   const filterNewEvents = () => {
     setShowNewEventsOnly(true);
     const newEvents = events.filter((event) => event.statusEvent === "NEW");
     setFilteredEvents(newEvents);
   };
 
-  // Show all events
   const showAllEvents = () => {
     setShowNewEventsOnly(false);
     setFilteredEvents(events);
@@ -68,7 +65,6 @@ export function Posts() {
       });
 
       if (response.ok) {
-        // Update the local state to reflect the new status
         setEvents((prevEvents) =>
           prevEvents.map((event) =>
             event.id === id ? { ...event, statusEvent: newStatus } : event
@@ -84,7 +80,6 @@ export function Posts() {
 
   return (
     <section className="grid min-h-screen place-items-center p-8">
-      {/* Search Field */}
       <div className="mb-8 w-full max-w-md">
         <Input
           type="text"
@@ -95,7 +90,6 @@ export function Posts() {
         />
       </div>
 
-      {/* Filter Button to Show Only "NEW" Status Events */}
       <div className="mb-8">
         <Button
           color="blue"
@@ -105,21 +99,19 @@ export function Posts() {
         </Button>
       </div>
 
-      {/* Events Grid */}
       <div className="container my-auto grid grid-cols-1 gap-x-8 gap-y-16 items-start lg:grid-cols-3">
         {filteredEvents.map(
           ({ id, image, category, name, shortDescription, date, organizer, statusEvent }) => (
             <div key={id}>
               <BlogPostCard
                 id={id}
-                img={`data:image/jpeg;base64,${image}`} // Pass the base64 string to BlogPostCard
+                img={`data:image/jpeg;base64,${image}`}
                 tag={category}
                 title={name}
                 desc={shortDescription}
                 date={date}
                 author={organizer.firstName + " " + organizer.lastName}
               />
-              {/* Conditional button rendering based on status */}
               {statusEvent === "CONFIRMED" ? (
                 <div className="flex gap-4 mt-4">
                   <Button
@@ -157,12 +149,10 @@ export function Posts() {
                 )
               )}
 
-              {/* Show the current status */}
               <Typography
                 variant="small"
-                className={`mt-4 ${
-                  statusEvent === "CONFIRMED" ? "text-green-500" : "text-red-500"
-                }`}
+                className={`mt-4 ${statusEvent === "CONFIRMED" ? "text-green-500" : "text-red-500"
+                  }`}
               >
                 Статус: {statusEvent}
               </Typography>
@@ -171,7 +161,6 @@ export function Posts() {
         )}
       </div>
 
-      {/* View More Button */}
       <Button
         variant="text"
         size="lg"

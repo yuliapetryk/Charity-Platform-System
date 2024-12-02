@@ -1,6 +1,5 @@
 
 "use client";
-// src/app/Register.tsx
 import React, { useState } from "react";
 
 const Register: React.FC = () => {
@@ -16,7 +15,6 @@ const Register: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle registration logic (API call)
         console.log("Registration attempted with:", form);
     };
 

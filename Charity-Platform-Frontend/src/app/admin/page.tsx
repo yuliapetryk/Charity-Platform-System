@@ -4,8 +4,7 @@ import { useRouter } from "next/navigation";
 import { Navbar, Footer } from "@/components";
 import Hero from "../hero";
 import Posts from "../posts";
-import Articles from "../articles";
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import store from '../store'
 
 export default function Campaign() {
@@ -13,15 +12,14 @@ export default function Campaign() {
 
     return (
         <Provider store={store}>
-        <>
-         <title>Open Hearts</title>
-            <Navbar />
-            <Hero />
-            <button onClick={() => router.push("/login")}>Sign In</button>
-            <Posts />
-            <Articles />
-            <Footer />
-        </>
+            <>
+                <title>Open Hearts</title>
+                <Navbar />
+                <Hero />
+                <button onClick={() => router.push("/login")}>Sign In</button>
+                <Posts />
+                <Footer />
+            </>
         </Provider>
     );
 }

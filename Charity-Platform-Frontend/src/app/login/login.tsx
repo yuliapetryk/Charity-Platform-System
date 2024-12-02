@@ -11,14 +11,12 @@ export function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // State for error message
-
+  const [errorMessage, setErrorMessage] = useState("");
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload = { email, password };
 
     try {
-      // Login and get the token
       const response = await fetch("http://localhost:8080/api/signin", {
         method: "POST",
         body: JSON.stringify(payload),
@@ -27,18 +25,16 @@ export function Login() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed"); // Use server error message if available
+        throw new Error(errorData.message || "Login failed");
       }
 
       const data = await response.json();
       const token = data.token;
       console.log("Token:", token);
 
-      // Save the token in Redux
       dispatch(setter(token));
-
-      // Redirect to home or dashboard
       router.push("/");
+
     } catch (err: any) {
       setErrorMessage(err.message || "Unable to login. Please try again.");
     }
@@ -52,7 +48,7 @@ export function Login() {
             color="blue-gray"
             className="text-[30px] lg:text-[34px] font-bold"
           >
-          Увійти до Open Hearts
+            Увійти до Open Hearts
           </Typography>
         </header>
         {errorMessage && (

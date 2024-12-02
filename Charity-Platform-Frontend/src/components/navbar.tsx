@@ -15,7 +15,6 @@ export function Navbar() {
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
-        {/* Logo */}
         <Typography
           as="span"
           color="blue-gray"
@@ -25,7 +24,6 @@ export function Navbar() {
           Open Hearts
         </Typography>
 
-        {/* Centered Navigation Links */}
         <div className="flex-1 flex justify-center">
           <ul className="flex gap-8">
             <li>
@@ -72,7 +70,6 @@ export function Navbar() {
           </ul>
         </div>
 
-        {/* Authentication Buttons */}
         <div className="flex gap-4">
           {isAuthenticated ? (
             <Button
@@ -81,7 +78,7 @@ export function Navbar() {
                 dispatch(logout());
                 router.push("/");
               }}
-                            className="text-gray-900 hover:text-blue-600"
+              className="text-gray-900 hover:text-blue-600"
             >
               Вийти
             </Button>
@@ -90,7 +87,7 @@ export function Navbar() {
               onClick={() => router.push("/login")}
               className="bg-blue-500 text-white hover:bg-blue-600"
             >
-               Увійти
+              Увійти
             </Button>
           )}
         </div>

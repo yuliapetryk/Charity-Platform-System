@@ -1,9 +1,9 @@
-"use client"; // Enables client-side rendering
+"use client"; 
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Navbar, Footer } from "@/components";
 import { Register } from "./register"
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import store from '../store'
 
 export default function Campaign() {
@@ -11,13 +11,12 @@ export default function Campaign() {
 
     return (
         <Provider store={store}>
-
-        <>
-            <title>Open Hearts</title>
-            <Navbar />
-            <Register/>
-            <Footer />
-        </>
+            <>
+                <title>Open Hearts</title>
+                <Navbar />
+                <Register />
+                <Footer />
+            </>
         </Provider>
     );
 }

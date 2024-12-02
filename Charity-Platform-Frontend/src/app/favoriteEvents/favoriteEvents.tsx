@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function Posts() {
   const [events, setEvents] = useState<any[]>([]);
-  const token = useSelector((state: any) => state.token.value); // Access token from Redux store
+  const token = useSelector((state: any) => state.token.value);
 
   useEffect(() => {
     const fetchFavoriteEvents = async () => {
@@ -19,7 +19,7 @@ export function Posts() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Send token in Authorization header
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -29,15 +29,15 @@ export function Posts() {
         if (!response.ok) throw new Error('Failed to fetch favorite events');
 
         const favoriteResponse = await fetch(`http://localhost:8080/api/favorite`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const favorites = await favoriteResponse.json();
 
         const favoriteEvents = data.filter((event: any) =>
-            favorites.includes(event.id)
-          );
+          favorites.includes(event.id)
+        );
 
-        setEvents(favoriteEvents); // Store favorite events
+        setEvents(favoriteEvents);
         console.log("All Events:", data);
         console.log("Favorite Events Id:", favorites);
         console.log("Favorite Events:", favoriteEvents);
@@ -50,7 +50,7 @@ export function Posts() {
     if (token) {
       fetchFavoriteEvents();
     }
-  }, [token]); // Run the fetch whenever the token changes
+  }, [token]);
 
   return (
     <section className="grid min-h-screen place-items-center p-8">
@@ -60,7 +60,7 @@ export function Posts() {
             <BlogPostCard
               id={id}
               key={name}
-              img={`data:image/jpeg;base64,${image}`} // Pass the base64 string to BlogPostCard
+              img={`data:image/jpeg;base64,${image}`}
               tag={category}
               title={name}
               desc={shortDescription}
@@ -69,7 +69,7 @@ export function Posts() {
             />
           ))
         ) : (
-          <Typography>No favorite events found.</Typography>
+          <Typography>У вас немає улюблених оголошень.</Typography>
         )}
       </div>
       <Button

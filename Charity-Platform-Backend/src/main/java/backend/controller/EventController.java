@@ -93,7 +93,7 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<String> createEvent(
-            @RequestHeader("Authorization") String authorizationHeader,  // Get token from headers
+            @RequestHeader("Authorization") String authorizationHeader,
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("shortDescription") String shortDescription,
@@ -182,6 +182,7 @@ public class EventController {
         event.setCategory(request.getCategory());
         event.setDescription(request.getDescription());
         event.setLink(request.getLink());
+        event.setStatusEvent(EventStatus.NEW);
         eventService.saveEvent(event);
 
         return ResponseEntity.ok("Event updated successfully");
