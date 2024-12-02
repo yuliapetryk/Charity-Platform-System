@@ -10,9 +10,9 @@ import { Provider, useSelector } from "react-redux";
 import store from "./store";
 
 function ConditionalRecommendedPosts() {
-  const token = useSelector((state: any) => state.token.value); // Get token from Redux
-  const [role, setRole] = useState<string | null>(null); // State to store user role
-  const [loading, setLoading] = useState(true); // Loading state
+  const token = useSelector((state: any) => state.token.value); 
+  const [role, setRole] = useState<string | null>(null); 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchUserRole = async () => {
@@ -29,20 +29,20 @@ function ConditionalRecommendedPosts() {
 
         const data = await response.json();
         console.log("data.role:", data.role);
-        setRole(data.role); // Update role state
+        setRole(data.role); 
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false); // Set loading to false
+        setLoading(false); 
       }
     };
 
-    if (token) fetchUserRole(); // Fetch role only if token exists
+    if (token) fetchUserRole(); 
   }, [token]);
 
-  if (loading) return null; // Show nothing while loading
+  if (loading) return null;
 
-  return role === "USER" ? <RecommendedPosts /> : null; // Render RecommendedPosts for USER role
+  return role === "USER" ? <RecommendedPosts /> : null; 
 }
 
 export default function Campaign() {
@@ -54,7 +54,7 @@ export default function Campaign() {
         <Hero />
         <Posts />
         <PostsPopular />
-        <ConditionalRecommendedPosts /> {/* Conditional rendering */}
+        <ConditionalRecommendedPosts /> 
         <Footer />
       </>
     </Provider>
