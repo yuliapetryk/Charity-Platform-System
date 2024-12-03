@@ -8,7 +8,7 @@ interface EventStatistics {
   name: string;
   date: string;
   views: number;
-  favoritesCount: number;
+  favorites: number;
   score: number;
 }
 
@@ -40,8 +40,9 @@ export default function Statistics() {
 
         const statsData = await statsResponse.json();
         setStatistics(statsData);
+        console.log("Statistics", statsData)
 
-        const favoritesResponse = await fetch(`http://localhost:8080/api/favorite/count-by-user/${token}`, {
+        const favoritesResponse = await fetch(`http://localhost:8080/api/favorite/count-by-user`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -116,7 +117,7 @@ export default function Statistics() {
                     <TableCell>{event.name}</TableCell>
                     <TableCell>{new Date(event.date).toLocaleDateString("uk-UA")}</TableCell>
                     <TableCell>{event.views}</TableCell>
-                    <TableCell>{event.favoritesCount}</TableCell>
+                    <TableCell>{event.favorites}</TableCell>
                     <TableCell>{event.score}</TableCell>
                   </TableRow>
                 ))}

@@ -179,7 +179,7 @@ const EventDetail = ({ id }: { id: any }) => {
 
             {averageScore !== null && averageScore !== 0 && (
               <Typography variant="h6" color="blue-gray" className="mt-4">
-                Середня оцінка: {averageScore.toFixed(2)}
+                Актуальність: {averageScore.toFixed(2)}
               </Typography>
             )}
 

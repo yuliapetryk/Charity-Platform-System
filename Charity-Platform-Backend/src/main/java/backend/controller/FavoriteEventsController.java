@@ -70,8 +70,10 @@ public class FavoriteEventsController {
         return ResponseEntity.ok(totalFavorites);
     }
 
-    @GetMapping("/count-by-user/{userId}")
-    public ResponseEntity<Long> getCountByUserId(@PathVariable Long userId) {
+    @GetMapping("/count-by-user")
+    public ResponseEntity<Long> getCountByUserId(Authentication authentication) {
+        String username = authentication.getName();
+        Long userId = (userService.findByUsername(username).getId());
         Long count = service.countByUserId(userId);
         return ResponseEntity.ok(count);
     }
