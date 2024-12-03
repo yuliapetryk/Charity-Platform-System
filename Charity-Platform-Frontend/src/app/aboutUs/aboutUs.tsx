@@ -26,6 +26,21 @@ function AboutUs() {
         </Typography>
       </div>
 
+      <div className="py-16 text-center">
+        <Typography variant="h4" color="blue-gray" className="mb-4">
+          Правила публікації
+        </Typography>
+        <Typography variant="small" color="blue-gray" className="max-w-4xl mx-auto text-left">
+          <ol className="list-decimal pl-6">
+            <li>Усі матеріали мають відповідати нормам етики та моралі.</li>
+            <li>Не допускається публікація неправдивої або оманливої інформації.</li>
+            <li>Заборонено використання мови ненависті, дискримінаційних чи образливих висловлювань.</li>
+            <li>Всі зображення та матеріали повинні відповідати стандартам авторських прав.</li>
+            <li>Адміністрація сайту залишає за собою право відхиляти оголошення, які порушують умови співпраці.</li>
+          </ol>
+        </Typography>
+      </div>
+
       <div className="py-16">
         <Typography variant="h4" color="blue-gray" className="text-center mb-8">
           Знайомтесь з нашою командою
@@ -62,7 +77,6 @@ function AboutUs() {
               </Typography>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -109,15 +123,7 @@ function AboutUs() {
         </div>
       </div>
 
-      <div className="py-16 text-center">
-        <Typography variant="h4" color="blue-gray" className="mb-4">
-          Приєднуйтесь до нас у створенні змін
-        </Typography>
-        <Typography variant="small" color="blue-gray" className="mb-8">
-          Станьте частиною змін! Ознайомтесь з нашими ініціативами та дізнайтесь, як ви можете допомогти зробити світ кращим.
-        </Typography>
-
-      </div>
+     
     </section>
   );
 }

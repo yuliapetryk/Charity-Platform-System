@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Button,
@@ -28,6 +28,9 @@ const categories = [
 
 export default function CreateEvent() {
   const router = useRouter();
+   const [isClient, setIsClient] = useState(false);
+
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
@@ -35,6 +38,10 @@ export default function CreateEvent() {
   const [link, setLink] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const token = useSelector((state: RootState) => state.token.value);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -181,6 +188,25 @@ export default function CreateEvent() {
               required
             />
           </div>
+
+          <Typography
+            variant="small"
+            color="blue-gray"
+            className="mt-4 text-gray-600 text-center"
+          >
+            Перед публікацією, будь ласка, ознайомтесь з{" "}
+            <a
+                href="/aboutUs"
+                className="text-blue-600"
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/aboutUs");
+                }}
+              >
+                правилами
+              </a>{" "}
+            спільноти.
+          </Typography>
 
           <Button
             type="submit"

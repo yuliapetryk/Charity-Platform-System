@@ -77,7 +77,7 @@ public class EventService {
                             + favoriteEventsService.getFavoriteEventCount(e2.getId()) * 0.5
                             + eventScoreService.getAverageScore(e2.getId()) * 0.2;
 
-                    return Double.compare(popularity2, popularity1); // Sort by descending popularity
+                    return Double.compare(popularity2, popularity1);
                 })
                 .collect(Collectors.toList());
     }
