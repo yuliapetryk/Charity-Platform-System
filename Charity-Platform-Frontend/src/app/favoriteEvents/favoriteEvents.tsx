@@ -69,18 +69,13 @@ export function Posts() {
             />
           ))
         ) : (
-          <Typography>У вас немає улюблених оголошень.</Typography>
+          <Typography
+            className="container my-full grid mt-0 justify-center items-top h-screen text-center"
+          >
+            У вас немає улюблених оголошень.
+          </Typography>
         )}
       </div>
-      <Button
-        variant="text"
-        size="lg"
-        color="gray"
-        className="flex items-center gap-2 mt-24"
-      >
-        <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-        Більше
-      </Button>
     </section>
   );
 }

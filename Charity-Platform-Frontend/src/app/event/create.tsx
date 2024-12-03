@@ -10,6 +10,8 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+
 
 interface RootState {
   token: {
@@ -25,6 +27,7 @@ const categories = [
 ];
 
 export default function CreateEvent() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [shortDescription, setShortDescription] = useState("");
@@ -68,6 +71,7 @@ export default function CreateEvent() {
         setCategory("");
         setImage(null);
         setLink("")
+        router.push("/profile");
       } else {
         console.log("Failed to create event. Please try again.");
       }
@@ -101,6 +105,8 @@ export default function CreateEvent() {
               label="Назва акції"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              maxLength={150}
+              minLength={10}
               size="lg"
               required
             />
@@ -116,6 +122,9 @@ export default function CreateEvent() {
               size="lg"
               required
             />
+             <p className="text-gray-500 text-sm mt-2">
+              {shortDescription.length} / 250 символів
+            </p>
           </div>
 
           <div>
@@ -126,7 +135,6 @@ export default function CreateEvent() {
               size="lg"
               maxLength={1500}
               minLength={50}
-              className="w-full overflow-hidden resize-none"
               required
             />
             <p className="text-gray-500 text-sm mt-2">
@@ -152,10 +160,11 @@ export default function CreateEvent() {
               value={category}
               onChange={(value) => setCategory(value || "")}
               size="lg"
+              
 
             >
               {categories.map((cat) => (
-                <Option key={cat} value={cat}>
+                <Option key={cat} value={cat} >
                   {cat}
                 </Option>
               ))}

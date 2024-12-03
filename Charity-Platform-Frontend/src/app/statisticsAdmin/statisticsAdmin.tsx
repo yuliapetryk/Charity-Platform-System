@@ -79,7 +79,9 @@ const AdminStatistics = () => {
       <div className="mt-12">
         <h2 className="text-2xl font-semibold text-center mb-6">Event Distribution by Category</h2>
         {Object.keys(categoryData).length > 0 ? (
-          <Pie data={pieData} />
+          <div className="flex justify-center">
+            <Pie data={pieData} width={600} height={600} options={{ maintainAspectRatio: false }} />
+          </div>
         ) : (
           <p className="text-center text-gray-500">Loading chart...</p>
         )}

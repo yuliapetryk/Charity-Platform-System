@@ -76,12 +76,12 @@ const Messages = () => {
         return (
           <div key={msg.eventId} className="mb-4 p-4 border rounded shadow">
             <p>
-              {msg.content === '{"message":"Canceled"}'? (
+              {msg.content === '{"message":"Confirmed"}'? (
                 <>
                   Вітаю! Ваше оголошення <strong>{eventName}</strong> успішно
                   опубліковано
                 </>
-              ) : msg.content === '{"message":"Confirmed"}' ? (
+              ) : msg.content === '{"message":"Canceled"}' ? (
                 <>
                   Вибачте, але ваше оголошення <strong>{eventName}</strong>{" "}
                   порушує умови спільноти, тому не буде опубліковано, виправіть його, будь ласка

@@ -11,7 +11,7 @@ const EventDetail = ({ id }: { id: any }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isRated, setIsRated] = useState<boolean>(false);
   const [averageScore, setAverageScore] = useState<number | null>(null);
-  const [userRating, setUserRating] = useState<number | null>(null); 
+  const [userRating, setUserRating] = useState<number | null>(null);
   const token = useSelector((state: any) => state.token.value);
   const [role, setRole] = useState<string | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
@@ -55,7 +55,7 @@ const EventDetail = ({ id }: { id: any }) => {
         });
         const userRatingData = await ratingResponse.json();
 
-        setIsRated(userRatingData); 
+        setIsRated(userRatingData);
         console.log("Is rated:", userRatingData)
         setIsAuthor(eventData.organizer.id === userIdData && userRole === "USER");
       } catch (error) {
@@ -97,6 +97,7 @@ const EventDetail = ({ id }: { id: any }) => {
         const scoreResponse = await fetch(`http://localhost:8080/api/${id}/average-score`);
         const avgScore = await scoreResponse.json();
         setAverageScore(avgScore);
+        setIsRated(true);
         setUserRating(rating);
       } catch (error) {
         console.error("Error submitting rating:", error);
@@ -107,7 +108,7 @@ const EventDetail = ({ id }: { id: any }) => {
   const handleDeleteEvent = async () => {
     try {
       const url = `http://localhost:8080/api/events/${id}`;
-      const method = "DELETE" ;
+      const method = "DELETE";
 
       const response = await fetch(url, {
         method,
@@ -136,7 +137,7 @@ const EventDetail = ({ id }: { id: any }) => {
         <CardBody>
           <div className="relative w-full h-96">
             <Image
-              src={`data:image/jpeg;base64,${event.image}`} 
+              src={`data:image/jpeg;base64,${event.image}`}
               alt={event.name}
               layout="fill"
               objectFit="cover"
@@ -161,12 +162,14 @@ const EventDetail = ({ id }: { id: any }) => {
             </Typography>
             <Typography className="mb-4">{event.description}</Typography>
 
-            <Typography variant="h6" color="blue-gray" className="mb-4">
-              Посилання на збір:
-            </Typography>
             <Typography>
-              <a href={event.link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                {event.link}
+              <a
+                href={event.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline font-bold text-lg hover:text-blue-800 focus:text-blue-900 transition-all"
+              >
+                Підтримати
               </a>
             </Typography>
 
@@ -191,16 +194,16 @@ const EventDetail = ({ id }: { id: any }) => {
                       key={rating}
                       onClick={() => handleRatingClick(rating)}
                       className={`p-3 rounded-full text-white ${userRating === rating
-                          ? "bg-green-500"
-                          : rating === 1
-                            ? "bg-red-500"
-                            : rating === 2
-                              ? "bg-orange-500"
-                              : rating === 3
-                                ? "bg-yellow-500"
-                                : rating === 4
-                                  ? "bg-lime-500"
-                                  : "bg-green-500"
+                        ? "bg-green-500"
+                        : rating === 1
+                          ? "bg-red-500"
+                          : rating === 2
+                            ? "bg-orange-500"
+                            : rating === 3
+                              ? "bg-yellow-500"
+                              : rating === 4
+                                ? "bg-lime-500"
+                                : "bg-green-500"
                         }`}
                       title={`Rate ${rating}`}
                     >
@@ -226,7 +229,7 @@ const EventDetail = ({ id }: { id: any }) => {
 
             {isAuthor && (
               <div className="mt-6 ">
-                <Button className= "mr-5" color="blue" onClick={() => router.push(`/editEvent/${id}`)}>
+                <Button className="mr-5" color="blue" onClick={() => router.push(`/editEvent/${id}`)}>
                   Редагувати
                 </Button>
 

@@ -55,6 +55,7 @@ export function Posts() {
 
   const updateEventStatus = async (id: number, newStatus: string) => {
     try {
+      // Update the event status
       const response = await fetch(`http://localhost:8080/api/events/${id}/status`, {
         method: "PUT",
         headers: {
@@ -63,13 +64,32 @@ export function Posts() {
         },
         body: JSON.stringify({ status: newStatus }),
       });
-
+  
       if (response.ok) {
+        // Update the local event state
         setEvents((prevEvents) =>
           prevEvents.map((event) =>
             event.id === id ? { ...event, statusEvent: newStatus } : event
           )
         );
+  
+        // Save a message based on the status update
+        const message = newStatus === "CONFIRMED" ? "Confirmed" : "Canceled";
+  
+        const messageResponse = await fetch(`http://localhost:8080/api/${id}/messages`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ message }),
+        });
+  
+        if (messageResponse.ok) {
+          console.log(`Message "${message}" saved for event ID: ${id}`);
+        } else {
+          console.error("Failed to save the message");
+        }
       } else {
         console.error("Failed to update event status");
       }
@@ -77,6 +97,7 @@ export function Posts() {
       console.error("Error updating event status:", error);
     }
   };
+  
 
   return (
     <section className="grid min-h-screen place-items-center p-8">
@@ -161,15 +182,6 @@ export function Posts() {
         )}
       </div>
 
-      <Button
-        variant="text"
-        size="lg"
-        color="gray"
-        className="flex items-center gap-2 mt-24"
-      >
-        <ArrowSmallDownIcon className="h-5 w-5 font-bold text-gray-900" />
-        Більше
-      </Button>
     </section>
   );
 }

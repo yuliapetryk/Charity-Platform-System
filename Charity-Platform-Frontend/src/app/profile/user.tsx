@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button, Card, Typography, Input } from "@material-tailwind/react";
 import { logout } from "../tokenSlice";
 import { UserIcon, CogIcon, ArrowLeftIcon, DocumentIcon } from "@heroicons/react/24/outline";
-
+import { BellIcon } from "@heroicons/react/24/outline";
 export function Profile() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -196,6 +196,14 @@ export function Profile() {
                   className="w-full flex items-center gap-2"
                 >
                   <UserIcon className="w-5 h-5" /> Переглянути статистику
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="pink"
+                  onClick={() => router.push("/messages")}
+                  className="w-full flex items-center gap-2 justify-center"
+                >
+                  <BellIcon className="w-5 h-5" /> Переглянути всі повідомлення
                 </Button>
               </>
             ) : userInfo.role === "ADMIN" ? (
